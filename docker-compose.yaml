@@ -1,0 +1,22 @@
+name: "career-seekers"
+services:
+  ms-postgres:
+    container_name: ms-postgres
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: ${MS_DB_USER}
+      POSTGRES_PASSWORD: ${MS_DB_PASSWORD}
+    volumes:
+      - ms-postgres-data:/var/lib/postgresql/data
+    ports:
+      - "8293:5432"
+    networks:
+      - backend-net
+
+volumes:
+  ms-postgres-data:
+
+networks:
+  backend-net:
+    driver: bridge
