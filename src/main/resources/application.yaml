@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: cs-mail-service
+  aop:
+    auto: true
+    proxy-target-class: true
+
+server:
+  port: ${SERVER_INTERNAL_PORT}
+
+database:
+  url: ${MS_DB_URL}
+  username: ${MS_DB_USER}
+  password: ${MS_DB_PASSWORD}
+  schema: ${MS_DB_SCHEMA}
+
+logging:
+  level:
+    org.careerseekers.csmailservice.config.FlywayConfig: ${FLYWAY_LOGGING}
