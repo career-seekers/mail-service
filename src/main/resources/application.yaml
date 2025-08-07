@@ -13,3 +13,7 @@ database:
   username: ${MS_DB_USER}
   password: ${MS_DB_PASSWORD}
   schema: ${MS_DB_SCHEMA}
+
+logging:
+  level:
+    org.careerseekers.csmailservice.config.FlywayConfig: ${FLYWAY_LOGGING}
