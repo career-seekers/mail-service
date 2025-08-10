@@ -5,6 +5,7 @@ spring:
     auto: true
     proxy-target-class: true
 
+
 server:
   port: ${SERVER_INTERNAL_PORT}
 
@@ -21,3 +22,9 @@ config:
 logging:
   level:
     org.careerseekers.csmailservice.config.FlywayConfig: ${FLYWAY_LOGGING}
+
+grpc:
+  client:
+    users-service:
+      address: ${USERS_SERVICE_URL}
+      negotiation-type: plaintext
