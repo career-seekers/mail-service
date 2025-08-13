@@ -16,7 +16,7 @@ import java.time.Duration
 class CacheConfig {
 
     @Bean
-    fun cacheConfiguration(): RedisCacheConfiguration {
+    fun cacheConfiguration30min(): RedisCacheConfiguration {
         val serializer = PolymorphicRedisSerializer(CachesDto.serializer(), json)
 
         return RedisCacheConfiguration.defaultCacheConfig()
@@ -26,9 +26,15 @@ class CacheConfig {
     }
 
     @Bean
+    fun cacheConfiguration5min(): RedisCacheConfiguration {
+        return cacheConfiguration30min().entryTtl(Duration.ofMinutes(5))
+    }
+
+    @Bean
     fun cacheManager(connectionFactory: RedisConnectionFactory): CacheManager {
         return RedisCacheManager.builder(connectionFactory)
-            .cacheDefaults(cacheConfiguration())
+            .withCacheConfiguration("verification_code", cacheConfiguration5min())
+            .cacheDefaults(cacheConfiguration30min())
             .build()
     }
 }
