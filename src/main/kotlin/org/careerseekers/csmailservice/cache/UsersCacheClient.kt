@@ -2,8 +2,10 @@ package org.careerseekers.csmailservice.cache
 
 import com.careerseekers.grpc.users.UserId
 import com.careerseekers.grpc.users.UsersServiceGrpc
+import io.grpc.StatusRuntimeException
 import net.devh.boot.grpc.client.inject.GrpcClient
 import org.careerseekers.csmailservice.dto.UsersCacheDto
+import org.careerseekers.csmailservice.exceptions.GrpcServiceUnavailableException
 import org.careerseekers.csmailservice.io.converters.extensions.toCache
 import org.springframework.cache.CacheManager
 import org.springframework.data.redis.core.RedisTemplate
@@ -23,12 +25,20 @@ class UsersCacheClient(
     override fun getItemFromCache(key: Any): UsersCacheDto? {
         val user = cache?.get(key)?.let {
             it.get() as? UsersCacheDto
-        } ?: usersServiceStub.getById(
-            UserId.newBuilder()
-                .setId(key as Long)
-                .build()
-        ).toCache()
+        } ?: getUser(key as Long)
 
         return user
+    }
+
+    private fun getUser(id: Long): UsersCacheDto? {
+        try {
+            return usersServiceStub.getById(
+                UserId.newBuilder()
+                    .setId(id)
+                    .build()
+            ).toCache()
+        } catch (_: StatusRuntimeException) {
+            throw GrpcServiceUnavailableException("Users gRPC service unavailable now.")
+        }
     }
 }

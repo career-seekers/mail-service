@@ -4,7 +4,13 @@ spring:
   aop:
     auto: true
     proxy-target-class: true
-
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    protocol: ${MAIL_PROTOCOL}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    debug: ${MAIL_DEBUG}
 
 server:
   port: ${SERVER_INTERNAL_PORT}
