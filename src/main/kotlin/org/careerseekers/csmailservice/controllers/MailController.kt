@@ -18,7 +18,9 @@ class MailController(private val mailer: JavaMailSender) {
     fun testSend() {
         val message = SimpleMailMessage()
         message.from = senderEmail
-        message.setTo("scobca18@yandex.ru")
+
+        TODO("ENTER YOUR EMAIL HERE")
+        message.setTo("")
         message.subject = "test sub"
         message.text = "test"
         mailer.send(message)
