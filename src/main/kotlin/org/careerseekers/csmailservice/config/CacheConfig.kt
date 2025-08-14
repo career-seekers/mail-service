@@ -1,7 +1,6 @@
 package org.careerseekers.csmailservice.config
 
 import org.careerseekers.csmailservice.dto.CachesDto
-import org.careerseekers.csmailservice.dto.json
 import org.careerseekers.csmailservice.serializers.PolymorphicRedisSerializer
 import org.springframework.cache.CacheManager
 import org.springframework.context.annotation.Bean
@@ -13,9 +12,9 @@ import org.springframework.data.redis.serializer.RedisSerializationContext
 import java.time.Duration
 
 @Configuration
-class CacheConfig {
-    private val serializer = PolymorphicRedisSerializer(CachesDto.serializer(), json)
-
+class CacheConfig(
+    private val serializer: PolymorphicRedisSerializer<out CachesDto>
+) {
     @Bean
     fun cacheConfiguration30min(): RedisCacheConfiguration {
         return RedisCacheConfiguration.defaultCacheConfig()
