@@ -1,0 +1,24 @@
+package org.careerseekers.csmailservice.cache
+
+import org.careerseekers.csmailservice.dto.VerificationCodeDto
+import org.springframework.cache.CacheManager
+import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.stereotype.Component
+
+@Component
+class VerificationCodesCache(
+    override val redisTemplate: RedisTemplate<String, VerificationCodeDto>,
+    cacheManager: CacheManager,
+) : CacheLoader<VerificationCodeDto>, CacheRetriever<VerificationCodeDto> {
+    override val cacheKey = "verification_codes"
+    private val cache = cacheManager.getCache(cacheKey)
+
+    override fun loadItemToCache(item: VerificationCodeDto) {
+        cache?.put(item.userId, item)
+    }
+
+
+    override fun getItemFromCache(key: Any): VerificationCodeDto? {
+        return cache?.get(key)?.let { it.get() as? VerificationCodeDto }
+    }
+}

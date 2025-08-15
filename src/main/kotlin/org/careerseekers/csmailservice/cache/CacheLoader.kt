@@ -1,6 +1,10 @@
 package org.careerseekers.csmailservice.cache
 
-interface CacheLoader<T> : CacheClient<T> {
-    fun preloadCache(): Any
+import org.springframework.data.redis.core.RedisTemplate
+
+interface CacheLoader<T> {
+    val cacheKey: String
+    val redisTemplate: RedisTemplate<String, T>
+
     fun loadItemToCache(item: T): Any
 }
