@@ -27,7 +27,6 @@ class KafkaEmailSendingConsumer(
 
                 break
             }
-            continue
         }
     }
 
