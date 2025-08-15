@@ -31,6 +31,14 @@ data class UsersCacheDto(
     val verified: Boolean,
 ) : CachesDto()
 
+@Serializable
+@SerialName("VerificationCodeDto")
+data class VerificationCodeDto(
+    val userId: Long,
+    val code: String,
+    var retries: Int
+) : CachesDto()
+
 val cacheModule = SerializersModule {
     polymorphic(CachesDto::class) {
         subclass(UsersCacheDto::class, UsersCacheDto.serializer())
