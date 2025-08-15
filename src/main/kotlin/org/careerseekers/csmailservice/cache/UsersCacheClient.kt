@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component
 class UsersCacheClient(
     override val redisTemplate: RedisTemplate<String, UsersCacheDto>,
     cacheManager: CacheManager,
-) : CacheClient<UsersCacheDto> {
+) : CacheRetriever<UsersCacheDto> {
     override val cacheKey = "users"
     private val cache = cacheManager.getCache(cacheKey)
 
@@ -30,7 +30,7 @@ class UsersCacheClient(
         return user
     }
 
-    private fun getUser(id: Long): UsersCacheDto? {
+    private fun getUser(id: Long): UsersCacheDto {
         try {
             return usersServiceStub.getById(
                 UserId.newBuilder()
