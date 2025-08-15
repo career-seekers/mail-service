@@ -11,6 +11,18 @@ spring:
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
     debug: ${MAIL_DEBUG}
+  kafka:
+    bootstrap-servers: ${KAFKA1_BOOTSTRAP_SERVICE_URL},${KAFKA2_BOOTSTRAP_SERVICE_URL},${KAFKA3_BOOTSTRAP_SERVICE_URL}
+    consumer:
+      properties:
+        session:
+          timeout:
+            ms: 60000
+        reconnect:
+          backoff:
+            ms: 1000
+            max:
+              ms: 20000
 
 server:
   port: ${SERVER_INTERNAL_PORT}
