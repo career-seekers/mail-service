@@ -2,12 +2,15 @@ package org.careerseekers.csmailservice.services.kafka.consumers
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
+import org.careerseekers.csmailservice.services.EmailProcessingService
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.support.Acknowledgment
 import org.springframework.stereotype.Service
 
 @Service
-class KafkaEmailSendingConsumer : CustomKafkaConsumer<String, EmailSendingTaskDto> {
+class KafkaEmailSendingConsumer(
+    private val emailProcessingServices: List<EmailProcessingService>
+) : CustomKafkaConsumer<String, EmailSendingTaskDto> {
 
     @KafkaListener(
         topics = ["EMAIL_SENDING_TASKS"],
@@ -17,9 +20,15 @@ class KafkaEmailSendingConsumer : CustomKafkaConsumer<String, EmailSendingTaskDt
         consumerRecord: ConsumerRecord<String, EmailSendingTaskDto>,
         acknowledgment: Acknowledgment
     ) {
-        println(consumerRecord.value())
+        for (service in emailProcessingServices) {
+            if (service.eventType == consumerRecord.value().eventType) {
+                service.processEmail(consumerRecord.value())
+                acknowledgment.acknowledge()
 
-        acknowledgment.acknowledge()
+                break
+            }
+            continue
+        }
     }
 
 }
