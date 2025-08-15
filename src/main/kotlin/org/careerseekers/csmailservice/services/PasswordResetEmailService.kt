@@ -42,7 +42,7 @@ class PasswordResetEmailService(
             message.text = """
                Уважаемый(-ая) ${user.lastName} ${user.firstName} ${user.patronymic}!
                
-               Для подтверждения изменения пароля введите следующий верификационный:
+               Для подтверждения изменения пароля введите следующий верификационный код:
                
                $code
                
