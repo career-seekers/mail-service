@@ -10,12 +10,14 @@ import org.careerseekers.csmailservice.utils.JwtUtil
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class PasswordResetEmailService(
-    private val mailer: JavaMailSender,
     private val jwtUtil: JwtUtil,
+    private val mailer: JavaMailSender,
+    private val passwordEncoder: PasswordEncoder,
     private val verificationCodesCache: VerificationCodesCache
 ) : EmailProcessingService {
     @Value("\${spring.mail.username}")
@@ -28,7 +30,7 @@ class PasswordResetEmailService(
             val code = generateVerificationCode()
             verificationCodesCache.loadItemToCache(VerificationCodeDto(
                 userId = user.id,
-                code = code,
+                code = passwordEncoder.encode(code),
                 retries = 0
             ))
 
@@ -38,7 +40,7 @@ class PasswordResetEmailService(
             message.setTo(user.email)
             message.subject = "Изменение пароля"
             message.text = """
-               Уважаемый(-ая) ${user.patronymic} ${user.firstName} ${user.lastName}!
+               Уважаемый(-ая) ${user.lastName} ${user.firstName} ${user.patronymic}!
                
                Для подтверждения изменения пароля введите следующий верификационный:
                
