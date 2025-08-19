@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class PasswordResetEmailService(
+    override val mailer: JavaMailSender,
     private val jwtUtil: JwtUtil,
-    private val mailer: JavaMailSender,
     private val passwordEncoder: PasswordEncoder,
     private val verificationCodesCache: VerificationCodesCache
 ) : EmailProcessingService {
@@ -34,7 +34,7 @@ class PasswordResetEmailService(
         val code = generateVerificationCode()
         verificationCodesCache.loadItemToCache(
             VerificationCodeDto(
-                userId = user.id,
+                userEmail = user.email,
                 code = passwordEncoder.encode(code),
                 retries = 0
             )
