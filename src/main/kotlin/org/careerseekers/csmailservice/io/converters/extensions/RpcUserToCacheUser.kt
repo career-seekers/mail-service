@@ -17,5 +17,6 @@ fun User.toCache() : UsersCacheDto {
         role = UsersRoles.valueOf(this.role),
         avatarId = this.avatarId,
         verified = this.verified,
+        isMentor = this.isMentor,
     )
 }

@@ -14,7 +14,7 @@ class VerificationCodesCache(
     private val cache = cacheManager.getCache(cacheKey)
 
     override fun loadItemToCache(item: VerificationCodeDto) {
-        cache?.put(item.userId, item)
+        cache?.put(item.userEmail, item)
     }
 
 

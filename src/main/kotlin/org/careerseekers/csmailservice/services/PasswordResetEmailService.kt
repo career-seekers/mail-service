@@ -4,6 +4,7 @@ import org.careerseekers.csmailservice.cache.VerificationCodesCache
 import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
 import org.careerseekers.csmailservice.dto.VerificationCodeDto
 import org.careerseekers.csmailservice.enums.MailEventTypes
+import org.careerseekers.csmailservice.exceptions.BadRequestException
 import org.careerseekers.csmailservice.exceptions.NotFoundException
 import org.careerseekers.csmailservice.utils.CodeGenerator.generateVerificationCode
 import org.careerseekers.csmailservice.utils.JwtUtil
@@ -15,8 +16,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class PasswordResetEmailService(
+    override val mailer: JavaMailSender,
     private val jwtUtil: JwtUtil,
-    private val mailer: JavaMailSender,
     private val passwordEncoder: PasswordEncoder,
     private val verificationCodesCache: VerificationCodesCache
 ) : EmailProcessingService {
@@ -26,34 +27,33 @@ class PasswordResetEmailService(
     override val eventType = MailEventTypes.PASSWORD_RESET
 
     override fun processEmail(message: EmailSendingTaskDto) {
-        jwtUtil.getUserFromToken(message.token)?.let { user ->
-            val code = generateVerificationCode()
-            verificationCodesCache.loadItemToCache(VerificationCodeDto(
-                userId = user.id,
+        val user = message.token?.let {
+            jwtUtil.getUserFromToken(it) ?: throw NotFoundException("User not found")
+        } ?: message.user ?: throw BadRequestException("This method requires user")
+
+        val code = generateVerificationCode()
+        verificationCodesCache.loadItemToCache(
+            VerificationCodeDto(
+                userEmail = user.email,
                 code = passwordEncoder.encode(code),
                 retries = 0
-            ))
+            )
+        )
 
-            val message = SimpleMailMessage()
-
-            message.from = senderEmail
-            message.setTo(user.email)
-            message.subject = "Изменение пароля"
-            message.text = """
-               Уважаемый(-ая) ${user.lastName} ${user.firstName} ${user.patronymic}!
-               
-               Для подтверждения изменения пароля введите следующий верификационный код:
-               
-               $code
-               
-               Если вы не запрашивали этот код, просто проигнорируйте это письмо.
-
-               Спасибо,
-               Команда поддержки Искателей профессий.
-            """.trimIndent()
-
-            mailer.send(message)
-        } ?: throw NotFoundException("User not found")
-
+        SimpleMailMessage().apply {
+            from = senderEmail
+            setTo(user.email)
+            subject = "Изменение пароля"
+            text = """
+            Уважаемый(-ая) ${user.lastName} ${user.firstName} ${user.patronymic}!
+            Для подтверждения изменения пароля введите следующий верификационный код: $code
+            Если вы не запрашивали этот код, просто проигнорируйте это письмо.
+            
+            Спасибо,
+            Команда поддержки Искателей профессий.
+        """.trimIndent()
+        }.also {
+            mailer.send(it)
+        }
     }
 }

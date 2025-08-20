@@ -1,6 +1,7 @@
 package org.careerseekers.csmailservice.config
 
 import org.careerseekers.csmailservice.dto.CachesDto
+import org.careerseekers.csmailservice.dto.TemporaryPasswordDto
 import org.careerseekers.csmailservice.dto.UsersCacheDto
 import org.careerseekers.csmailservice.dto.VerificationCodeDto
 import org.careerseekers.csmailservice.serializers.PolymorphicRedisSerializer
@@ -40,6 +41,24 @@ class RedisTemplatesConfig(
         connectionFactory: RedisConnectionFactory
     ): RedisTemplate<String, VerificationCodeDto> {
         val template = RedisTemplate<String, VerificationCodeDto>()
+        template.connectionFactory = connectionFactory
+
+        template.keySerializer = StringRedisSerializer()
+        template.valueSerializer = serializer
+
+        template.hashKeySerializer = StringRedisSerializer()
+        template.hashValueSerializer = serializer
+
+        template.afterPropertiesSet()
+        return template
+    }
+
+    @Bean
+    @Qualifier("temporaryPasswords")
+    fun temporaryPasswordsRedisTemplate(
+        connectionFactory: RedisConnectionFactory
+    ): RedisTemplate<String, TemporaryPasswordDto> {
+        val template = RedisTemplate<String, TemporaryPasswordDto>()
         template.connectionFactory = connectionFactory
 
         template.keySerializer = StringRedisSerializer()

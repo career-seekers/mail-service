@@ -29,19 +29,29 @@ data class UsersCacheDto(
     val role: UsersRoles,
     val avatarId: Long,
     val verified: Boolean,
+    val isMentor: Boolean,
 ) : CachesDto()
 
 @Serializable
 @SerialName("VerificationCodeDto")
 data class VerificationCodeDto(
-    val userId: Long,
+    val userEmail: String,
     val code: String,
     var retries: Int
+) : CachesDto()
+
+@Serializable
+@SerialName("TemporaryPasswordDto")
+data class TemporaryPasswordDto(
+    val email: String,
+    val password: String
 ) : CachesDto()
 
 val cacheModule = SerializersModule {
     polymorphic(CachesDto::class) {
         subclass(UsersCacheDto::class, UsersCacheDto.serializer())
+        subclass(VerificationCodeDto::class, VerificationCodeDto.serializer())
+        subclass(TemporaryPasswordDto::class, TemporaryPasswordDto.serializer())
     }
 }
 
