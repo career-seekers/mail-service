@@ -40,6 +40,13 @@ data class VerificationCodeDto(
     var retries: Int
 ) : CachesDto()
 
+@Serializable
+@SerialName("TemporaryPasswordDto")
+data class TemporaryPasswordDto(
+    val email: String,
+    val password: String
+)
+
 val cacheModule = SerializersModule {
     polymorphic(CachesDto::class) {
         subclass(UsersCacheDto::class, UsersCacheDto.serializer())
