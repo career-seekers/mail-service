@@ -12,6 +12,10 @@ plugins {
     id("it.nicolasfarabegoli.conventional-commits") version "3.1.3"
 }
 
+val mockitoAgent: Configuration by configurations.creating {
+    isTransitive = false
+}
+
 group = "org.careerseekers"
 version = "0.0.1-SNAPSHOT"
 
@@ -93,7 +97,9 @@ dependencies {
     // Tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    mockitoAgent("org.mockito:mockito-core")
 
     // Netty
     val nettyVersion = "4.1.122.Final"
@@ -135,6 +141,8 @@ allOpen {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    jvmArgs("-javaagent:${mockitoAgent.asPath}")
+    jvmArgs("-Xshare:off")
 }
 
 tasks.bootBuildImage {
