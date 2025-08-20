@@ -45,7 +45,7 @@ data class VerificationCodeDto(
 data class TemporaryPasswordDto(
     val email: String,
     val password: String
-)
+) : CachesDto()
 
 val cacheModule = SerializersModule {
     polymorphic(CachesDto::class) {
