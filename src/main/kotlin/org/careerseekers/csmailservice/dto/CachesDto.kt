@@ -50,6 +50,8 @@ data class TemporaryPasswordDto(
 val cacheModule = SerializersModule {
     polymorphic(CachesDto::class) {
         subclass(UsersCacheDto::class, UsersCacheDto.serializer())
+        subclass(VerificationCodeDto::class, VerificationCodeDto.serializer())
+        subclass(TemporaryPasswordDto::class, TemporaryPasswordDto.serializer())
     }
 }
 
