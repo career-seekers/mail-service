@@ -11,12 +11,6 @@ class MailConfig {
     @Value("\${spring.mail.host}")
     private val host: String? = null
 
-    @Value("\${spring.mail.username}")
-    private val username: String? = null
-
-    @Value("\${spring.mail.password}")
-    private val password: String? = null
-
     @Value("\${spring.mail.port}")
     private val port: Int = 0
 
@@ -26,13 +20,19 @@ class MailConfig {
     @Value("\${spring.mail.debug}")
     private val debug: String = "false"
 
+    @Value("\${spring.mail.production_mail.username}")
+    private val productionUsername: String? = null
+
+    @Value("\${spring.mail.production_mail.password}")
+    private val productionPassword: String? = null
+
     @Bean
-    fun mailSender(): JavaMailSender {
+    fun productionMailSender(): JavaMailSender {
         val mailSender = JavaMailSenderImpl()
         mailSender.host = host
         mailSender.port = port
-        mailSender.username = username
-        mailSender.password = password
+        mailSender.username = productionUsername
+        mailSender.password = productionPassword
 
         val props = mailSender.javaMailProperties
         props.setProperty("mail.transport.protocol", protocol)

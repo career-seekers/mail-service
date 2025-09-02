@@ -14,8 +14,9 @@ spring:
     host: ${MAIL_HOST}
     port: ${MAIL_PORT}
     protocol: ${MAIL_PROTOCOL}
-    username: ${MAIL_USERNAME}
-    password: ${MAIL_PASSWORD}
+    production_mail:
+      username: ${PRODUCTION_MAIL_USERNAME}
+      password: ${PRODUCTION_MAIL_PASSWORD}
     debug: ${MAIL_DEBUG}
   kafka:
     bootstrap-servers: ${KAFKA1_BOOTSTRAP_SERVICE_URL},${KAFKA2_BOOTSTRAP_SERVICE_URL},${KAFKA3_BOOTSTRAP_SERVICE_URL}
