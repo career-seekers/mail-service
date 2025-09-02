@@ -4,6 +4,7 @@ import org.careerseekers.csmailservice.cache.TemporaryPasswordsCache
 import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
 import org.careerseekers.csmailservice.enums.MailEventTypes
 import org.careerseekers.csmailservice.exceptions.BadRequestException
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
@@ -11,11 +12,11 @@ import org.springframework.stereotype.Service
 
 @Service
 class ExpertRegistrationEmailService(
-    override val mailer: JavaMailSender,
+    @param:Qualifier("productionMailSender") override val mailer: JavaMailSender,
     private val temporaryPasswordsCache: TemporaryPasswordsCache,
 ) : EmailProcessingService {
 
-    @Value("\${spring.mail.username}")
+    @Value("\${spring.mail.production_mail.username}")
     private val senderEmail: String? = null
 
     override val eventType = MailEventTypes.EXPERT_REGISTRATION
