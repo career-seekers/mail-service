@@ -1,5 +1,6 @@
 package org.careerseekers.csmailservice.config
 
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -26,13 +27,37 @@ class MailConfig {
     @Value("\${spring.mail.production_mail.password}")
     private val productionPassword: String? = null
 
+    @Value("\${spring.mail.service_mail.username}")
+    private val serviceUsername: String? = null
+
+    @Value("\${spring.mail.service_mail.password}")
+    private val servicePassword: String? = null
+
     @Bean
+    @Qualifier("productionMailSender")
     fun productionMailSender(): JavaMailSender {
         val mailSender = JavaMailSenderImpl()
         mailSender.host = host
         mailSender.port = port
         mailSender.username = productionUsername
         mailSender.password = productionPassword
+
+        val props = mailSender.javaMailProperties
+        props.setProperty("mail.transport.protocol", protocol)
+        props.setProperty("mail.debug", debug)
+
+        return mailSender
+    }
+
+    @Bean
+    @Qualifier("serviceMailSender")
+    fun serviceMailSender(): JavaMailSender {
+        val mailSender = JavaMailSenderImpl()
+
+        mailSender.host = host
+        mailSender.port = port
+        mailSender.username = serviceUsername
+        mailSender.password = servicePassword
 
         val props = mailSender.javaMailProperties
         props.setProperty("mail.transport.protocol", protocol)
