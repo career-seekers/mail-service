@@ -2,6 +2,7 @@ package org.careerseekers.csmailservice.services
 
 import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
 import org.careerseekers.csmailservice.enums.MailEventTypes
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class MentorAndUserRegistrationEmailService(
-    override val mailer: JavaMailSender
+    @param:Qualifier("productionMailSender") override val mailer: JavaMailSender
 ) : EmailProcessingService {
     @Value("\${spring.mail.username}")
     private val senderEmail: String? = null

@@ -8,6 +8,7 @@ import org.careerseekers.csmailservice.exceptions.BadRequestException
 import org.careerseekers.csmailservice.exceptions.NotFoundException
 import org.careerseekers.csmailservice.utils.CodeGenerator.generateVerificationCode
 import org.careerseekers.csmailservice.utils.JwtUtil
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class PasswordResetEmailService(
-    override val mailer: JavaMailSender,
+    @param:Qualifier("productionMailSender") override val mailer: JavaMailSender,
     private val jwtUtil: JwtUtil,
     private val passwordEncoder: PasswordEncoder,
     private val verificationCodesCache: VerificationCodesCache
