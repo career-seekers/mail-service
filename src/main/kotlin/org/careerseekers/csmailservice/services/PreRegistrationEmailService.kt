@@ -19,7 +19,7 @@ class PreRegistrationEmailService(
     private val passwordEncoder: PasswordEncoder,
 ) : EmailProcessingService {
 
-    @Value("\${spring.mail.username}")
+    @Value("\${spring.mail.production_mail.username}")
     private val senderEmail: String? = null
 
     override val eventType = MailEventTypes.PRE_REGISTRATION

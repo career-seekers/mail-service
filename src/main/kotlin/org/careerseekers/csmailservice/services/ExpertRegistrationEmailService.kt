@@ -16,7 +16,7 @@ class ExpertRegistrationEmailService(
     private val temporaryPasswordsCache: TemporaryPasswordsCache,
 ) : EmailProcessingService {
 
-    @Value("\${spring.mail.username}")
+    @Value("\${spring.mail.production_mail.username}")
     private val senderEmail: String? = null
 
     override val eventType = MailEventTypes.EXPERT_REGISTRATION

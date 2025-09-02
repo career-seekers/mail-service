@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service
 class MentorAndUserRegistrationEmailService(
     @param:Qualifier("productionMailSender") override val mailer: JavaMailSender
 ) : EmailProcessingService {
-    @Value("\${spring.mail.username}")
+
+    @Value("\${spring.mail.production_mail.username}")
     private val senderEmail: String? = null
 
     override val eventType = MailEventTypes.MENTOR_AND_USER_REGISTRATION
