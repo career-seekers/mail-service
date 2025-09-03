@@ -29,6 +29,6 @@ data class PlatformDto(
 
 @Serializable
 @SerialName("PlatformCreation")
-data class PlatformCreation (
+data class PlatformCreationDto (
     val platform: PlatformDto
 ) : KafkaMessagesDto()
