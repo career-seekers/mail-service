@@ -18,7 +18,7 @@ class EmailSendingConsumerConfig : ConsumerFactoryConfiguration() {
     )
 
     @Bean
-    fun kafkaListenerContainerFactory() = createKafkaListenerContainerFactory<EmailSendingTaskDto>(
+    fun emailSendingContainerFactory() = createKafkaListenerContainerFactory<EmailSendingTaskDto>(
         groupId = "email_sending_tasks_consumer",
         valueDeserializer = PolymorphicKafkaSerializer::class.java
     )

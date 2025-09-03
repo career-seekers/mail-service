@@ -18,7 +18,7 @@ class PlatformCreationConsumerConfig : ConsumerFactoryConfiguration() {
     )
 
     @Bean
-    fun kafkaListenerContainerFactory() = createKafkaListenerContainerFactory<PlatformCreation>(
+    fun platformCreationContainerFactory() = createKafkaListenerContainerFactory<PlatformCreation>(
         groupId = "platform_creations_tasks_consumer",
         valueDeserializer = PolymorphicKafkaSerializer::class.java,
     )
