@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.config.TopicBuilder
 
 @Configuration
-class KafkaConfig {
+class KafkaTopicsConfig {
 
     @Bean
     fun emailSendingTasksTopic(): NewTopic {
