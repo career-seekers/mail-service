@@ -17,4 +17,13 @@ class KafkaConfig {
             .replicas(3)
             .build()
     }
+
+    @Bean
+    fun platformCreationTopic(): NewTopic {
+        return TopicBuilder
+            .name(KafkaTopics.PLATFORM_CREATION.name)
+            .partitions(12)
+            .replicas(3)
+            .build()
+    }
 }
