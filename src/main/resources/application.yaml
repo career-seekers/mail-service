@@ -52,6 +52,10 @@ logging:
     org.careerseekers.csmailservice.config.FlywayConfig: ${FLYWAY_LOGGING}
 
 grpc:
+  server:
+    port: ${GRPC_SERVER_PORT}
+    security:
+      enabled: false
   client:
     users-service:
       address: ${USERS_SERVICE_URL}
