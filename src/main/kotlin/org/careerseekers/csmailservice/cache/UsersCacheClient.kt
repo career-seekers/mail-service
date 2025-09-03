@@ -2,10 +2,12 @@ package org.careerseekers.csmailservice.cache
 
 import com.careerseekers.grpc.users.UserId
 import com.careerseekers.grpc.users.UsersServiceGrpc
+import io.grpc.Status
 import io.grpc.StatusRuntimeException
 import net.devh.boot.grpc.client.inject.GrpcClient
 import org.careerseekers.csmailservice.dto.UsersCacheDto
 import org.careerseekers.csmailservice.exceptions.GrpcServiceUnavailableException
+import org.careerseekers.csmailservice.exceptions.NotFoundException
 import org.careerseekers.csmailservice.io.converters.extensions.toCache
 import org.springframework.cache.CacheManager
 import org.springframework.data.redis.core.RedisTemplate
@@ -37,8 +39,13 @@ class UsersCacheClient(
                     .setId(id)
                     .build()
             ).toCache()
-        } catch (_: StatusRuntimeException) {
-            throw GrpcServiceUnavailableException("Users gRPC service unavailable now.")
+        } catch (e: StatusRuntimeException) {
+            when (e.status.code) {
+                Status.Code.NOT_FOUND -> throw NotFoundException("User with id $id not found")
+                Status.Code.UNAVAILABLE -> throw GrpcServiceUnavailableException("Users gRPC service unavailable now.")
+
+                else -> throw e
+            }
         }
     }
 }
