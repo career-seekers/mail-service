@@ -43,7 +43,7 @@ class PlatformCreationService(
                 Адрес размещения: ${message.platform.address}
                 
                 Информация о пользователе, добавивший площадку
-                ФИО: ${user.lastName + " " + user.firstName + " " + user.patronymic}
+                ФИО: ${user.lastName} ${user.firstName} ${user.patronymic}
                 Email: ${user.email}
                 Телефон для связи: ${user.mobileNumber}
 
