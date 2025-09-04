@@ -25,9 +25,7 @@ class PlatformCreationService(
 
     override fun handle(record: ConsumerRecord<String, PlatformCreationDto>) {
         val message = record.value()
-
-        var user: UsersCacheDto? = null
-        message.platform.userId?.let { user = usersCacheClient.getItemFromCache(it) }
+        val user = message.platform.userId?.let { usersCacheClient.getItemFromCache(it) }
 
         SimpleMailMessage().apply {
             from = senderEmail
