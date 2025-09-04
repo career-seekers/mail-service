@@ -3,7 +3,6 @@ package org.careerseekers.csmailservice.services
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.cache.UsersCacheClient
 import org.careerseekers.csmailservice.dto.PlatformCreationDto
-import org.careerseekers.csmailservice.dto.UsersCacheDto
 import org.careerseekers.csmailservice.services.kafka.KafkaMessageHandler
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
