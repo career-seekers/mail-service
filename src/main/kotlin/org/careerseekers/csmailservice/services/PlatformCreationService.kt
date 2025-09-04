@@ -42,7 +42,7 @@ class PlatformCreationService(
                 Краткое название: ${message.platform.shortName}
                 Адрес размещения: ${message.platform.address}
                 
-                Информация о пользователе, добавивший площадку
+                Информация о пользователе, добавившем площадку
                 ФИО: ${user.lastName} ${user.firstName} ${user.patronymic}
                 Email: ${user.email}
                 Телефон для связи: ${user.mobileNumber}
