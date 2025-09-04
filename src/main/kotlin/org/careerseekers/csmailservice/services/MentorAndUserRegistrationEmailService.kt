@@ -1,7 +1,9 @@
 package org.careerseekers.csmailservice.services
 
+import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
 import org.careerseekers.csmailservice.enums.MailEventTypes
+import org.careerseekers.csmailservice.services.kafka.EmailProcessingService
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.SimpleMailMessage
@@ -18,7 +20,9 @@ class MentorAndUserRegistrationEmailService(
 
     override val eventType = MailEventTypes.MENTOR_AND_USER_REGISTRATION
 
-    override fun processEmail(message: EmailSendingTaskDto) {
+    override fun handle(record: ConsumerRecord<String, EmailSendingTaskDto>) {
+        val message = record.value()
+
        message.user?.let { user ->
            SimpleMailMessage().apply {
                from = senderEmail

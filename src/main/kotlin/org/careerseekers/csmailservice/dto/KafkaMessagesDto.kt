@@ -17,3 +17,18 @@ class EmailSendingTaskDto(
     val user: UsersCacheDto? = null,
     val eventType: MailEventTypes,
 ) : KafkaMessagesDto()
+
+@Serializable
+data class PlatformDto(
+    val id: Long,
+    val fullName: String,
+    val shortName: String,
+    val address: String,
+    val userId: Long?,
+)
+
+@Serializable
+@SerialName("PlatformCreation")
+data class PlatformCreationDto (
+    val platform: PlatformDto
+) : KafkaMessagesDto()

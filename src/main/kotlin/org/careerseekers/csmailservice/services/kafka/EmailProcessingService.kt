@@ -1,12 +1,10 @@
-package org.careerseekers.csmailservice.services
+package org.careerseekers.csmailservice.services.kafka
 
 import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
 import org.careerseekers.csmailservice.enums.MailEventTypes
 import org.springframework.mail.javamail.JavaMailSender
 
-interface EmailProcessingService {
+interface EmailProcessingService : KafkaMessageHandler<String, EmailSendingTaskDto> {
     val mailer: JavaMailSender
     val eventType: MailEventTypes
-
-    fun processEmail(message: EmailSendingTaskDto)
 }

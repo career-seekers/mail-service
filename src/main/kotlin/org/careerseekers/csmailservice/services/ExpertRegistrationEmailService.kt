@@ -1,9 +1,11 @@
 package org.careerseekers.csmailservice.services
 
+import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.cache.TemporaryPasswordsCache
 import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
 import org.careerseekers.csmailservice.enums.MailEventTypes
 import org.careerseekers.csmailservice.exceptions.BadRequestException
+import org.careerseekers.csmailservice.services.kafka.EmailProcessingService
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.SimpleMailMessage
@@ -21,7 +23,9 @@ class ExpertRegistrationEmailService(
 
     override val eventType = MailEventTypes.EXPERT_REGISTRATION
 
-    override fun processEmail(message: EmailSendingTaskDto) {
+    override fun handle(record: ConsumerRecord<String, EmailSendingTaskDto>) {
+        val message = record.value()
+
         message.user?.let { user ->
             val cacheItem =
                 temporaryPasswordsCache.getItemFromCache(user.email) ?: throw BadRequestException("Password not found")

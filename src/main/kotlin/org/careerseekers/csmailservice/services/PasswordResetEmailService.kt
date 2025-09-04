@@ -1,11 +1,13 @@
 package org.careerseekers.csmailservice.services
 
+import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.cache.VerificationCodesCache
 import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
 import org.careerseekers.csmailservice.dto.VerificationCodeDto
 import org.careerseekers.csmailservice.enums.MailEventTypes
 import org.careerseekers.csmailservice.exceptions.BadRequestException
 import org.careerseekers.csmailservice.exceptions.NotFoundException
+import org.careerseekers.csmailservice.services.kafka.EmailProcessingService
 import org.careerseekers.csmailservice.utils.CodeGenerator.generateVerificationCode
 import org.careerseekers.csmailservice.utils.JwtUtil
 import org.springframework.beans.factory.annotation.Qualifier
@@ -28,7 +30,9 @@ class PasswordResetEmailService(
 
     override val eventType = MailEventTypes.PASSWORD_RESET
 
-    override fun processEmail(message: EmailSendingTaskDto) {
+    override fun handle(record: ConsumerRecord<String, EmailSendingTaskDto>) {
+        val message = record.value()
+
         val user = message.token?.let {
             jwtUtil.getUserFromToken(it) ?: throw NotFoundException("User not found")
         } ?: message.user ?: throw BadRequestException("This method requires user")

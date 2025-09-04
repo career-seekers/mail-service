@@ -1,9 +1,11 @@
 package org.careerseekers.csmailservice.services
 
+import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.cache.VerificationCodesCache
 import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
 import org.careerseekers.csmailservice.dto.VerificationCodeDto
 import org.careerseekers.csmailservice.enums.MailEventTypes
+import org.careerseekers.csmailservice.services.kafka.EmailProcessingService
 import org.careerseekers.csmailservice.utils.CodeGenerator.generateVerificationCode
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
@@ -24,7 +26,9 @@ class PreRegistrationEmailService(
 
     override val eventType = MailEventTypes.PRE_REGISTRATION
 
-    override fun processEmail(message: EmailSendingTaskDto) {
+    override fun handle(record: ConsumerRecord<String, EmailSendingTaskDto>) {
+        val message = record.value()
+
         message.email?.let { email ->
             val code = generateVerificationCode()
             verificationCodesCache.loadItemToCache(

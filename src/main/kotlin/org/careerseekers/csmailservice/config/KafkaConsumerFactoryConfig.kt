@@ -1,8 +1,8 @@
-package org.careerseekers.csmailservice.config.kafka.consumers
+package org.careerseekers.csmailservice.config
 
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
-import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
+import org.careerseekers.csmailservice.dto.KafkaMessagesDto
 import org.careerseekers.csmailservice.serializers.PolymorphicKafkaSerializer
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -15,19 +15,20 @@ import org.springframework.kafka.listener.ContainerProperties
 
 @Configuration
 @EnableKafka
-class EmailSendingConsumerConfig {
+class KafkaConsumerFactoryConfig {
+
     @Value("\${spring.kafka.bootstrap-servers}")
     private lateinit var kafkaUrl: String
 
     @Bean
-    fun emailSendingConsumerFactory(): ConsumerFactory<String, EmailSendingTaskDto> {
+    fun consumerFactory(): ConsumerFactory<String, KafkaMessagesDto> {
         val configProps = mapOf(
             /**
              *  Kafka cluster connection settings
              *  Connecting to Kafka and serializing keys and values
              */
             ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG to kafkaUrl,
-            ConsumerConfig.GROUP_ID_CONFIG to "email_sending_tasks_consumer",
+            ConsumerConfig.GROUP_ID_CONFIG to "mail_service_consumers",
             ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
             ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to PolymorphicKafkaSerializer::class.java,
 
@@ -72,9 +73,9 @@ class EmailSendingConsumerConfig {
 
     @Bean
     fun kafkaListenerContainerFactory(
-        consumerFactory: ConsumerFactory<String, EmailSendingTaskDto>
-    ): ConcurrentKafkaListenerContainerFactory<String, EmailSendingTaskDto> {
-        val factory = ConcurrentKafkaListenerContainerFactory<String, EmailSendingTaskDto>()
+        consumerFactory: ConsumerFactory<String, KafkaMessagesDto>
+    ): ConcurrentKafkaListenerContainerFactory<String, KafkaMessagesDto> {
+        val factory = ConcurrentKafkaListenerContainerFactory<String, KafkaMessagesDto>()
 
         factory.consumerFactory = consumerFactory
         factory.containerProperties.ackMode = ContainerProperties.AckMode.MANUAL_IMMEDIATE
