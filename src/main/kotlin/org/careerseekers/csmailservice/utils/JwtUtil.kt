@@ -5,18 +5,18 @@ import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.careerseekers.csmailservice.cache.UsersCacheClient
+import org.careerseekers.csmailservice.config.JwtProperties
 import org.careerseekers.csmailservice.dto.UsersCacheDto
 import org.careerseekers.csmailservice.exceptions.JwtAuthenticationException
 import org.careerseekers.csmailservice.exceptions.NotFoundException
-import org.springframework.beans.factory.annotation.Value
 import java.util.Date
 import kotlin.text.toByteArray
 
 @Utility
-class JwtUtil(private val usersCacheClient: UsersCacheClient) {
-    @Value("\${config.jwt.secret}")
-    private lateinit var jwtSecret: String
-
+class JwtUtil(
+    private val usersCacheClient: UsersCacheClient,
+    private val jwtProperties: JwtProperties
+) {
     fun verifyToken(token: String, throwTimeLimit: Boolean = true): Boolean {
         val claims = getClaims(token) ?: throw JwtAuthenticationException("Invalid token claims")
         if (!claims.expiration.after(Date()) && throwTimeLimit) {
@@ -36,7 +36,7 @@ class JwtUtil(private val usersCacheClient: UsersCacheClient) {
     fun getClaims(token: String): Claims? {
         val claims = try {
             Jwts.parser()
-                .verifyWith(Keys.hmacShaKeyFor(jwtSecret.toByteArray()))
+                .verifyWith(Keys.hmacShaKeyFor(jwtProperties.secret.toByteArray()))
                 .build()
                 .parseSignedClaims(token)
                 .payload

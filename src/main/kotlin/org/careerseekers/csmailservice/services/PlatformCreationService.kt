@@ -2,10 +2,10 @@ package org.careerseekers.csmailservice.services
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.cache.UsersCacheClient
+import org.careerseekers.csmailservice.config.MailProperties
 import org.careerseekers.csmailservice.dto.PlatformCreationDto
 import org.careerseekers.csmailservice.services.kafka.KafkaMessageHandler
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
@@ -14,21 +14,16 @@ import org.springframework.stereotype.Service
 class PlatformCreationService(
     @param:Qualifier("serviceMailSender") private val mailer: JavaMailSender,
     private val usersCacheClient: UsersCacheClient,
+    private val mailProperties: MailProperties,
 ) : KafkaMessageHandler<String, PlatformCreationDto> {
-
-    @Value("\${spring.mail.service_mail.username}")
-    private val senderEmail: String? = null
-
-    @Value("\${spring.mail.production_mail.username}")
-    private val consumerEmail: String? = null
 
     override fun handle(record: ConsumerRecord<String, PlatformCreationDto>) {
         val message = record.value()
         val user = message.platform.userId?.let { usersCacheClient.getItemFromCache(it) }
 
         SimpleMailMessage().apply {
-            from = senderEmail
-            setTo(consumerEmail)
+            from = mailProperties.serviceMail.username
+            setTo(mailProperties.productionMail.username)
             subject = "Регистрация новой площадки"
 
             if (user != null) {

@@ -1,50 +1,26 @@
 package org.careerseekers.csmailservice.config
 
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.JavaMailSenderImpl
 
 @Configuration
-class MailConfig {
-    @Value("\${spring.mail.host}")
-    private val host: String? = null
-
-    @Value("\${spring.mail.port}")
-    private val port: Int = 0
-
-    @Value("\${spring.mail.protocol}")
-    private val protocol: String? = null
-
-    @Value("\${spring.mail.debug}")
-    private val debug: String = "false"
-
-    @Value("\${spring.mail.production_mail.username}")
-    private val productionUsername: String? = null
-
-    @Value("\${spring.mail.production_mail.password}")
-    private val productionPassword: String? = null
-
-    @Value("\${spring.mail.service_mail.username}")
-    private val serviceUsername: String? = null
-
-    @Value("\${spring.mail.service_mail.password}")
-    private val servicePassword: String? = null
+class MailConfig(private val mailProperties: MailProperties) {
 
     @Bean
     @Qualifier("productionMailSender")
     fun productionMailSender(): JavaMailSender {
         val mailSender = JavaMailSenderImpl()
-        mailSender.host = host
-        mailSender.port = port
-        mailSender.username = productionUsername
-        mailSender.password = productionPassword
+        mailSender.host = mailProperties.host
+        mailSender.port = mailProperties.port.toInt()
+        mailSender.username = mailProperties.productionMail.username
+        mailSender.password = mailProperties.productionMail.password
 
         val props = mailSender.javaMailProperties
-        props.setProperty("mail.transport.protocol", protocol)
-        props.setProperty("mail.debug", debug)
+        props.setProperty("mail.transport.protocol", mailProperties.protocol)
+        props.setProperty("mail.debug", mailProperties.debug)
 
         return mailSender
     }
@@ -54,14 +30,14 @@ class MailConfig {
     fun serviceMailSender(): JavaMailSender {
         val mailSender = JavaMailSenderImpl()
 
-        mailSender.host = host
-        mailSender.port = port
-        mailSender.username = serviceUsername
-        mailSender.password = servicePassword
+        mailSender.host = mailProperties.host
+        mailSender.port = mailProperties.port.toInt()
+        mailSender.username = mailProperties.serviceMail.username
+        mailSender.password = mailProperties.serviceMail.password
 
         val props = mailSender.javaMailProperties
-        props.setProperty("mail.transport.protocol", protocol)
-        props.setProperty("mail.debug", debug)
+        props.setProperty("mail.transport.protocol", mailProperties.protocol)
+        props.setProperty("mail.debug", mailProperties.debug)
 
         return mailSender
     }

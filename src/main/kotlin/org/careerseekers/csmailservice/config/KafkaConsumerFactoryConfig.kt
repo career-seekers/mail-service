@@ -4,7 +4,7 @@ import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
 import org.careerseekers.csmailservice.dto.KafkaMessagesDto
 import org.careerseekers.csmailservice.serializers.PolymorphicKafkaSerializer
-import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.annotation.EnableKafka
@@ -13,12 +13,11 @@ import org.springframework.kafka.core.ConsumerFactory
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
 import org.springframework.kafka.listener.ContainerProperties
 
-@Configuration
 @EnableKafka
+@Configuration
+@ConfigurationProperties(prefix = "spring.kafka")
 class KafkaConsumerFactoryConfig {
-
-    @Value("\${spring.kafka.bootstrap-servers}")
-    private lateinit var kafkaUrl: String
+    lateinit var bootstrapServers: String
 
     @Bean
     fun consumerFactory(): ConsumerFactory<String, KafkaMessagesDto> {
@@ -27,7 +26,7 @@ class KafkaConsumerFactoryConfig {
              *  Kafka cluster connection settings
              *  Connecting to Kafka and serializing keys and values
              */
-            ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG to kafkaUrl,
+            ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG to bootstrapServers,
             ConsumerConfig.GROUP_ID_CONFIG to "mail_service_consumers",
             ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
             ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to PolymorphicKafkaSerializer::class.java,

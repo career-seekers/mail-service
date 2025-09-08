@@ -1,22 +1,20 @@
 package org.careerseekers.csmailservice.services
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
+import org.careerseekers.csmailservice.config.MailProperties
 import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
 import org.careerseekers.csmailservice.enums.MailEventTypes
 import org.careerseekers.csmailservice.services.kafka.EmailProcessingService
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
 
 @Service
 class MentorAndUserRegistrationEmailService(
-    @param:Qualifier("productionMailSender") override val mailer: JavaMailSender
+    @param:Qualifier("productionMailSender") override val mailer: JavaMailSender,
+    private val mailProperties: MailProperties,
 ) : EmailProcessingService {
-
-    @Value("\${spring.mail.production_mail.username}")
-    private val senderEmail: String? = null
 
     override val eventType = MailEventTypes.MENTOR_AND_USER_REGISTRATION
 
@@ -25,7 +23,7 @@ class MentorAndUserRegistrationEmailService(
 
        message.user?.let { user ->
            SimpleMailMessage().apply {
-               from = senderEmail
+               from = mailProperties.productionMail.username
                setTo(user.email)
                subject = "Регистрация наставника в системе Искатели профессий"
                text = """
