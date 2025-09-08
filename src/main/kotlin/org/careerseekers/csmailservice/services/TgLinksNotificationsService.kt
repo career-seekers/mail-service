@@ -24,7 +24,7 @@ class TgLinksNotificationsService(
             setTo(user.email)
             subject = "Добавление ссылки на Телеграм-аккаунт"
             text = """
-            Уважаемы(-ая) ${user.lastName} ${user.firstName} ${user.patronymic}!   
+            Уважаемый(-ая) ${user.lastName} ${user.firstName} ${user.patronymic}!   
             Сообщаем, что к Вашему аккаунту был привязан Telegram-аккаунт. Если это были Вы, ничего дополнительно предпринимать не нужно.
 
             Если вы не осуществляли данное действие, пожалуйста, свяжитесь с нашей Службой поддержки для защиты Вашего аккаунта.
