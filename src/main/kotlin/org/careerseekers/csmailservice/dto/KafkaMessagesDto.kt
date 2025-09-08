@@ -32,3 +32,10 @@ data class PlatformDto(
 data class PlatformCreationDto (
     val platform: PlatformDto
 ) : KafkaMessagesDto()
+
+@Serializable
+@SerialName("tg_link_notification")
+class TgLinkNotificationDto(
+    val user: UsersCacheDto,
+    val eventType: MailEventTypes = MailEventTypes.TG_LINK_CREATION,
+) : KafkaMessagesDto()
