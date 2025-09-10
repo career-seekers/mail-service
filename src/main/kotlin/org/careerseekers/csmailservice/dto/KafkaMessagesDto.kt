@@ -41,6 +41,7 @@ class TgLinkNotificationDto(
 ) : KafkaMessagesDto()
 
 @Serializable
+@SerialName("DirectionCreation")
 data class DirectionCreation(
     val name: String,
     val tutor: UsersCacheDto,
