@@ -39,3 +39,10 @@ class TgLinkNotificationDto(
     val user: UsersCacheDto,
     val eventType: MailEventTypes = MailEventTypes.TG_LINK_CREATION,
 ) : KafkaMessagesDto()
+
+@Serializable
+data class DirectionCreation(
+    val name: String,
+    val tutor: UsersCacheDto,
+    val expert: UsersCacheDto,
+) : KafkaMessagesDto()
