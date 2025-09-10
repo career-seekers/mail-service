@@ -35,4 +35,13 @@ class KafkaTopicsConfig {
             .replicas(3)
             .build()
     }
+
+    @Bean
+    fun directionCreationTopic(): NewTopic {
+        return TopicBuilder
+            .name(KafkaTopics.DIRECTION_CREATION.name)
+            .partitions(12)
+            .replicas(3)
+            .build()
+    }
 }
