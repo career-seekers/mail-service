@@ -47,3 +47,13 @@ data class DirectionCreation(
     val tutor: UsersCacheDto,
     val expert: UsersCacheDto,
 ) : KafkaMessagesDto()
+
+@Serializable
+@SerialName("DirectionDocumentsCreation")
+data class DirectionDocumentsCreation (
+    val documentType: String,
+    val directionName: String,
+    val directionAgeCategory: String,
+    val expert: UsersCacheDto,
+    val tutor: UsersCacheDto,
+) : KafkaMessagesDto()
