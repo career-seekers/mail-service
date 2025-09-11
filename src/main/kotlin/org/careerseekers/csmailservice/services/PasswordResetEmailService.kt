@@ -51,10 +51,12 @@ class PasswordResetEmailService(
             text = """
             Уважаемый(-ая) ${user.lastName} ${user.firstName} ${user.patronymic}!
             Для подтверждения изменения пароля введите следующий верификационный код: $code
-            Если вы не запрашивали этот код, просто проигнорируйте это письмо.
+            Если Вы не запрашивали этот код, просто проигнорируйте это письмо.
             
             Спасибо,
             Команда поддержки Искателей профессий.
+            ${mailProperties.productionMail.username}
+            Канал технической поддержки платформы: https://t.me/career_seekers_help
         """.trimIndent()
         }.also {
             mailer.send(it)

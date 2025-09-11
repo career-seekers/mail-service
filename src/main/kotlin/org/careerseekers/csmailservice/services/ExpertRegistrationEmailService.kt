@@ -30,11 +30,11 @@ class ExpertRegistrationEmailService(
             SimpleMailMessage().apply {
                 from = mailProperties.productionMail.username
                 setTo(user.email)
-                subject = "Регистрация эксперта в системе Искатели профессий"
+                subject = "Регистрация Главного эксперта в системе Искатели профессий"
                 text = """
             Уважаемый(-ая) ${user.lastName} ${user.firstName} ${user.patronymic}!
-            Вас зарегистрировали как Эксперта на чемпионат Искатели профессий. 
-            По ссылке ниже вы можете перейти в личный кабинет Эксперта, где сможете подробно изучить свои возможности и обязанности:
+            Вас зарегистрировали как Главного эксперта на чемпионат Искатели профессий. 
+            По ссылке ниже Вы можете перейти в личный кабинет Главного эксперта, где сможете подробно изучить свои возможности и обязанности:
             https://career-seekers.ru/
             
             Реквизиты для входа в личный кабинет:
@@ -43,6 +43,8 @@ class ExpertRegistrationEmailService(
             
             Спасибо,
             Команда поддержки Искателей профессий.
+            ${mailProperties.productionMail.username}
+            Канал технической поддержки платформы: https://t.me/career_seekers_help
         """.trimIndent()
             }.also {
                 mailer.send(it)

@@ -29,11 +29,13 @@ class MentorAndUserRegistrationEmailService(
                text = """
             Уважаемый(-ая) ${user.lastName} ${user.firstName} ${user.patronymic}!
             Вы зарегистрировались как наставник чемпионата Искатели профессий. 
-            По ссылке ниже вы можете перейти в личный кабинет Наставника, где можете подробно изучить свои возможности и обязанности:
+            По ссылке ниже Вы можете перейти в личный кабинет Наставника, где можете подробно изучить свои возможности:
             https://career-seekers.ru/login
             
             Спасибо,
             Команда поддержки Искателей профессий.
+            ${mailProperties.productionMail.username}
+            Канал технической поддержки платформы: https://t.me/career_seekers_help
         """.trimIndent()
            }.also {
                mailer.send(it)
