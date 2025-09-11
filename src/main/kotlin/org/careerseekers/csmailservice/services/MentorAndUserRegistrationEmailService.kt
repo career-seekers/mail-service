@@ -30,7 +30,7 @@ class MentorAndUserRegistrationEmailService(
             Уважаемый(-ая) ${user.lastName} ${user.firstName} ${user.patronymic}!
             Вы зарегистрировались как наставник чемпионата Искатели профессий. 
             По ссылке ниже вы можете перейти в личный кабинет Наставника, где можете подробно изучить свои возможности и обязанности:
-            https://github.com/career-seekers
+            https://career-seekers.ru/login
             
             Спасибо,
             Команда поддержки Искателей профессий.
