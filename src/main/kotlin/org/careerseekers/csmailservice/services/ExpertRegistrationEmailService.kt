@@ -35,7 +35,7 @@ class ExpertRegistrationEmailService(
             Уважаемый(-ая) ${user.lastName} ${user.firstName} ${user.patronymic}!
             Вас зарегистрировали как Эксперта на чемпионат Искатели профессий. 
             По ссылке ниже вы можете перейти в личный кабинет Эксперта, где сможете подробно изучить свои возможности и обязанности:
-            https://github.com/career-seekers
+            https://career-seekers.ru/
             
             Реквизиты для входа в личный кабинет:
             Логин: ${user.email}
