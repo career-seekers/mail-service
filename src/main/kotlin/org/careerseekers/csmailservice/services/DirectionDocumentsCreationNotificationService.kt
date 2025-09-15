@@ -24,7 +24,7 @@ class DirectionDocumentsCreationNotificationService(
             subject = "Искатели Профессий | Загрузка нового документа"
             text = """
             Уважаемый(-ая) ${message.tutor.lastName} ${message.tutor.firstName} ${message.tutor.patronymic}!   
-            Сообщаем Вам, что ${message.expert.lastName} ${message.expert.firstName} ${message.expert.patronymic} добавил новый документ для компетенции ${message.directionName}.
+            Сообщаем Вам, что ${message.expert.lastName} ${message.expert.firstName} ${message.expert.patronymic} добавил новый документ для компетенции ${message.directionName}, в возрастной категории ${message.ageCategory}.
 
             Более подробную информацию Вы можете увидеть в своем Личном кабинете.
            
