@@ -22,6 +22,7 @@ class WebSecurityConfig(
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .authorizeHttpRequests { auth ->
+                auth.requestMatchers("/actuator/prometheus").permitAll()
                 auth.anyRequest().authenticated()
             }
             .csrf { csrf -> csrf.disable() }
