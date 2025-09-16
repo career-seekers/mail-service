@@ -60,3 +60,13 @@ grpc:
     users-service:
       address: ${USERS_SERVICE_URL}
       negotiation-type: plaintext
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  prometheus:
+    metrics:
+      export:
+        enabled: true

@@ -101,6 +101,10 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     mockitoAgent("org.mockito:mockito-core")
 
+    // Metrics
+    implementation("io.micrometer:micrometer-tracing-bridge-brave")
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus")
+
     // Netty
     val nettyVersion = "4.1.122.Final"
     val osName = System.getProperty("os.name").lowercase()
