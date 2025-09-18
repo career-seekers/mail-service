@@ -10,7 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
 
 @Service
-class DirectionDocumentsCreationNotificationService(
+class DirectionDocumentsTasksNotificationService(
     @param:Qualifier("productionMailSender") private val mailer: JavaMailSender,
     private val mailProperties: MailProperties,
 ) : KafkaMessageHandler<String, DirectionDocumentsCreation> {

@@ -46,9 +46,9 @@ class KafkaTopicsConfig {
     }
 
     @Bean
-    fun directionDocumentsCreationTopic(): NewTopic {
+    fun directionDocumentsTasksTopic(): NewTopic {
         return TopicBuilder
-            .name(KafkaTopics.DIRECTION_DOCUMENTS_CREATION.name)
+            .name(KafkaTopics.DIRECTION_DOCUMENTS_TASKS.name)
             .partitions(12)
             .replicas(3)
             .build()
