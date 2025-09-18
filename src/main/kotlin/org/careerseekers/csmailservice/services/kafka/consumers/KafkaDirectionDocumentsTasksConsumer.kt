@@ -2,14 +2,14 @@ package org.careerseekers.csmailservice.services.kafka.consumers
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.dto.DirectionDocumentsTask
-import org.careerseekers.csmailservice.services.DirectionDocsCreationService
+import org.careerseekers.csmailservice.services.notifications.DirectionDocsCreationNotificationService
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.support.Acknowledgment
 import org.springframework.stereotype.Service
 
 @Service
 class KafkaDirectionDocumentsTasksConsumer(
-    private val service: DirectionDocsCreationService
+    private val service: DirectionDocsCreationNotificationService
 ) : CustomKafkaConsumer<String, DirectionDocumentsTask> {
 
     @KafkaListener(

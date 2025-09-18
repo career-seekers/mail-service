@@ -1,21 +1,21 @@
-package org.careerseekers.csmailservice.services
+package org.careerseekers.csmailservice.services.notifications
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.cache.UsersCacheClient
 import org.careerseekers.csmailservice.config.MailProperties
 import org.careerseekers.csmailservice.dto.PlatformCreationDto
-import org.careerseekers.csmailservice.services.interfaces.KafkaMessageHandler
+import org.careerseekers.csmailservice.services.interfaces.IKafkaMessageHandler
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
 
 @Service
-class PlatformCreationService(
+class PlatformCreationNotificationService(
     @param:Qualifier("serviceMailSender") private val mailer: JavaMailSender,
     private val usersCacheClient: UsersCacheClient,
     private val mailProperties: MailProperties,
-) : KafkaMessageHandler<String, PlatformCreationDto> {
+) : IKafkaMessageHandler<String, PlatformCreationDto> {
 
     override fun handle(record: ConsumerRecord<String, PlatformCreationDto>) {
         val message = record.value()

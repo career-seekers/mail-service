@@ -1,30 +1,33 @@
-package org.careerseekers.csmailservice.services
+package org.careerseekers.csmailservice.services.notifications
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.config.MailProperties
-import org.careerseekers.csmailservice.dto.DirectionCreation
-import org.careerseekers.csmailservice.services.interfaces.KafkaMessageHandler
+import org.careerseekers.csmailservice.dto.DirectionDocumentsTask
+import org.careerseekers.csmailservice.enums.DirectionDocsEventTypes
+import org.careerseekers.csmailservice.services.interfaces.IDirectionDocsTasksProcessingService
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
 
 @Service
-class DirectionCreationNotificationService(
+class DirectionDocsCreationNotificationService(
     @param:Qualifier("productionMailSender") private val mailer: JavaMailSender,
     private val mailProperties: MailProperties,
-) : KafkaMessageHandler<String, DirectionCreation> {
+) : IDirectionDocsTasksProcessingService {
 
-    override fun handle(record: ConsumerRecord<String, DirectionCreation>) {
+    override val eventType = DirectionDocsEventTypes.CREATION
+
+    override fun handle(record: ConsumerRecord<String, DirectionDocumentsTask>) {
         val message = record.value()
 
         SimpleMailMessage().apply {
             from = mailProperties.productionMail.username
-            setTo(message.expert.email)
-            subject = "Искатели Профессий | Создание новой компетенции"
+            setTo(message.tutor.email)
+            subject = "Искатели Профессий | Загрузка нового документа"
             text = """
-            Уважаемый(-ая) ${message.expert.lastName} ${message.expert.firstName} ${message.expert.patronymic}!   
-            Сообщаем, что Вам добавлена новая компетенция — ${message.name}.
+            Уважаемый(-ая) ${message.tutor.lastName} ${message.tutor.firstName} ${message.tutor.patronymic}!   
+            Сообщаем Вам, что ${message.expert.lastName} ${message.expert.firstName} ${message.expert.patronymic} добавил новый документ для компетенции ${message.directionName}, в возрастной категории ${message.ageCategory}.
 
             Более подробную информацию Вы можете увидеть в своем Личном кабинете.
            

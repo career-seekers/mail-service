@@ -1,4 +1,4 @@
-package org.careerseekers.csmailservice.services
+package org.careerseekers.csmailservice.services.notifications
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.cache.VerificationCodesCache
@@ -6,7 +6,7 @@ import org.careerseekers.csmailservice.config.MailProperties
 import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
 import org.careerseekers.csmailservice.dto.VerificationCodeDto
 import org.careerseekers.csmailservice.enums.MailEventTypes
-import org.careerseekers.csmailservice.services.interfaces.EmailProcessingService
+import org.careerseekers.csmailservice.services.interfaces.IEmailNotificationProcessingService
 import org.careerseekers.csmailservice.utils.CodeGenerator.generateVerificationCode
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.mail.SimpleMailMessage
@@ -15,12 +15,12 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class PreRegistrationEmailService(
+class PreRegistrationNotificationServiceNotificationI(
     @param:Qualifier("productionMailSender") override val mailer: JavaMailSender,
     private val verificationCodesCache: VerificationCodesCache,
     private val passwordEncoder: PasswordEncoder,
     private val mailProperties: MailProperties,
-) : EmailProcessingService {
+) : IEmailNotificationProcessingService {
 
     override val eventType = MailEventTypes.PRE_REGISTRATION
 
