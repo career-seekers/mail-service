@@ -2,20 +2,23 @@ package org.careerseekers.csmailservice.services
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.config.MailProperties
-import org.careerseekers.csmailservice.dto.DirectionDocumentsCreation
-import org.careerseekers.csmailservice.services.kafka.KafkaMessageHandler
+import org.careerseekers.csmailservice.dto.DirectionDocumentsTask
+import org.careerseekers.csmailservice.enums.DirectionDocsEventTypes
+import org.careerseekers.csmailservice.services.kafka.IDirectionDocsTasksProcessingService
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
 
 @Service
-class DirectionDocumentsTasksNotificationService(
+class DirectionDocsCreationService(
     @param:Qualifier("productionMailSender") private val mailer: JavaMailSender,
     private val mailProperties: MailProperties,
-) : KafkaMessageHandler<String, DirectionDocumentsCreation> {
+) : IDirectionDocsTasksProcessingService {
 
-    override fun handle(record: ConsumerRecord<String, DirectionDocumentsCreation>) {
+    override val eventType = DirectionDocsEventTypes.CREATION
+
+    override fun handle(record: ConsumerRecord<String, DirectionDocumentsTask>) {
         val message = record.value()
 
         SimpleMailMessage().apply {
