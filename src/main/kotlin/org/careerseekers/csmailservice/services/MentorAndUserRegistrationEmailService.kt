@@ -4,7 +4,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.config.MailProperties
 import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
 import org.careerseekers.csmailservice.enums.MailEventTypes
-import org.careerseekers.csmailservice.services.kafka.EmailProcessingService
+import org.careerseekers.csmailservice.services.interfaces.EmailProcessingService
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender

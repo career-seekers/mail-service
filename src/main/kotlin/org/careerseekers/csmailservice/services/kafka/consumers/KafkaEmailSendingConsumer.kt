@@ -2,7 +2,7 @@ package org.careerseekers.csmailservice.services.kafka.consumers
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
-import org.careerseekers.csmailservice.services.kafka.EmailProcessingService
+import org.careerseekers.csmailservice.services.interfaces.EmailProcessingService
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.support.Acknowledgment
 import org.springframework.stereotype.Service

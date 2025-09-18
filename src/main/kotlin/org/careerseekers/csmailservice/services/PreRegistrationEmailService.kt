@@ -6,7 +6,7 @@ import org.careerseekers.csmailservice.config.MailProperties
 import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
 import org.careerseekers.csmailservice.dto.VerificationCodeDto
 import org.careerseekers.csmailservice.enums.MailEventTypes
-import org.careerseekers.csmailservice.services.kafka.EmailProcessingService
+import org.careerseekers.csmailservice.services.interfaces.EmailProcessingService
 import org.careerseekers.csmailservice.utils.CodeGenerator.generateVerificationCode
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.mail.SimpleMailMessage

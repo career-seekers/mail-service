@@ -1,4 +1,4 @@
-package org.careerseekers.csmailservice.services.kafka
+package org.careerseekers.csmailservice.services.interfaces
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 
