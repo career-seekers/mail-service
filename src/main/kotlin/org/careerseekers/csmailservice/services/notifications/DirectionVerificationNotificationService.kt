@@ -23,7 +23,7 @@ class DirectionVerificationNotificationService(
 
         SimpleMailMessage().apply {
             from = mailProperties.productionMail.username
-            setTo(message.tutor.email)
+            setTo(message.expert.email)
             subject = "Искатели Профессий | Документ верифицирован"
             text = """
             Уважаемый(-ая) ${message.expert.lastName} ${message.expert.firstName} ${message.expert.patronymic}!   
