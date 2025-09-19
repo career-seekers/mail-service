@@ -1,9 +1,9 @@
-package org.careerseekers.csmailservice.services
+package org.careerseekers.csmailservice.services.notifications
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.config.MailProperties
 import org.careerseekers.csmailservice.dto.TgLinkNotificationDto
-import org.careerseekers.csmailservice.services.kafka.KafkaMessageHandler
+import org.careerseekers.csmailservice.services.interfaces.IKafkaMessageHandler
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 class TgLinksNotificationsService(
     @param:Qualifier("productionMailSender") private val mailer: JavaMailSender,
     private val mailProperties: MailProperties,
-) : KafkaMessageHandler<String, TgLinkNotificationDto> {
+) : IKafkaMessageHandler<String, TgLinkNotificationDto> {
 
     override fun handle(record: ConsumerRecord<String, TgLinkNotificationDto>) {
         val message = record.value()

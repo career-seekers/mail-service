@@ -1,4 +1,4 @@
-package org.careerseekers.csmailservice.services
+package org.careerseekers.csmailservice.services.notifications
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.cache.VerificationCodesCache
@@ -8,7 +8,7 @@ import org.careerseekers.csmailservice.dto.VerificationCodeDto
 import org.careerseekers.csmailservice.enums.MailEventTypes
 import org.careerseekers.csmailservice.exceptions.BadRequestException
 import org.careerseekers.csmailservice.exceptions.NotFoundException
-import org.careerseekers.csmailservice.services.kafka.EmailProcessingService
+import org.careerseekers.csmailservice.services.interfaces.IEmailNotificationProcessingService
 import org.careerseekers.csmailservice.utils.CodeGenerator.generateVerificationCode
 import org.careerseekers.csmailservice.utils.JwtUtil
 import org.springframework.beans.factory.annotation.Qualifier
@@ -18,13 +18,13 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
-class PasswordResetEmailService(
+class PasswordResetNotificationServiceNotificationI(
     @param:Qualifier("productionMailSender") override val mailer: JavaMailSender,
     private val jwtUtil: JwtUtil,
     private val passwordEncoder: PasswordEncoder,
     private val verificationCodesCache: VerificationCodesCache,
     private val mailProperties: MailProperties,
-) : EmailProcessingService {
+) : IEmailNotificationProcessingService {
 
     override val eventType = MailEventTypes.PASSWORD_RESET
 

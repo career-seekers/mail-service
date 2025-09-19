@@ -1,8 +1,8 @@
-package org.careerseekers.csmailservice.services.kafka
+package org.careerseekers.csmailservice.services.interfaces
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 
-interface KafkaMessageHandler<T, K> {
+interface IKafkaMessageHandler<T, K> {
 
     fun handle(record: ConsumerRecord<T, K>)
 }

@@ -2,7 +2,7 @@ package org.careerseekers.csmailservice.services.kafka.consumers
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.dto.TgLinkNotificationDto
-import org.careerseekers.csmailservice.services.TgLinksNotificationsService
+import org.careerseekers.csmailservice.services.notifications.TgLinksNotificationsService
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.support.Acknowledgment
 import org.springframework.stereotype.Service
