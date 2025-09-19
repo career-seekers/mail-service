@@ -11,12 +11,12 @@ import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
 
 @Service
-class DirectionDocsCreationNotificationService(
+class DirectionVerificationNotificationService(
     @param:Qualifier("productionMailSender") private val mailer: JavaMailSender,
     private val mailProperties: MailProperties,
 ) : IDirectionDocsTasksProcessingService {
 
-    override val eventType = DirectionDocsEventTypes.CREATION
+    override val eventType = DirectionDocsEventTypes.VERIFICATION
 
     override fun handle(record: ConsumerRecord<String, DirectionDocumentsTask>) {
         val message = record.value()
@@ -24,12 +24,11 @@ class DirectionDocsCreationNotificationService(
         SimpleMailMessage().apply {
             from = mailProperties.productionMail.username
             setTo(message.tutor.email)
-            subject = "Искатели Профессий | Загрузка нового документа"
+            subject = "Искатели Профессий | Документ верифицирован"
             text = """
-            Уважаемый(-ая) ${message.tutor.lastName} ${message.tutor.firstName} ${message.tutor.patronymic}!   
-            Сообщаем Вам, что ${message.expert.lastName} ${message.expert.firstName} ${message.expert.patronymic} добавил новый документ для компетенции ${message.directionName} возрастной категории ${message.ageCategory}.
+            Уважаемый(-ая) ${message.expert.lastName} ${message.expert.firstName} ${message.expert.patronymic}!   
+            Сообщаем Вам, что документ «${message.documentType}» для компетенции ${message.directionName} возрастной категории ${message.ageCategory} успешно прошел проверку.
 
-            Более подробную информацию Вы можете увидеть в своем Личном кабинете.
            
             Спасибо,
             Команда поддержки Искателей профессий.
