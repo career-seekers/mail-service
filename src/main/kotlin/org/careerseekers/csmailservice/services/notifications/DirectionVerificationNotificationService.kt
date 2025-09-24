@@ -25,16 +25,31 @@ class DirectionVerificationNotificationService(
             from = mailProperties.productionMail.username
             setTo(message.expert.email)
             subject = "Искатели Профессий | Документ верифицирован"
-            text = """
-            Уважаемый(-ая) ${message.expert.lastName} ${message.expert.firstName} ${message.expert.patronymic}!   
-            Сообщаем Вам, что документ «${message.documentType}» для компетенции ${message.directionName} возрастной категории ${message.ageCategory} успешно прошел проверку.
-
-           
-            Спасибо,
-            Команда поддержки Искателей профессий.
-            ${mailProperties.productionMail.username}
-            Канал технической поддержки платформы: https://t.me/career_seekers_help
-        """.trimIndent()
+            if (message.verification) {
+                text = """
+                    Уважаемый(-ая) ${message.expert.lastName} ${message.expert.firstName} ${message.expert.patronymic}!   
+                    Сообщаем Вам, что документ «${message.documentType}» для компетенции ${message.directionName} возрастной категории ${message.ageCategory} успешно прошел проверку.
+        
+                   
+                    Спасибо,
+                    Команда поддержки Искателей профессий.
+                    ${mailProperties.productionMail.username}
+                    Канал технической поддержки платформы: https://t.me/career_seekers_help
+                """.trimIndent()
+            } else {
+                text = """
+                    Уважаемый(-ая) ${message.expert.lastName} ${message.expert.firstName} ${message.expert.patronymic}!   
+                    Сообщаем Вам, что документ «${message.documentType}» для компетенции ${message.directionName} возрастной категории ${message.ageCategory} не прошел проверку.
+                    
+                    Для уточнения деталей, пожалуйста, обратитесь к Бурдун Надежде Анатольевне.
+      
+                    
+                    Спасибо,
+                    Команда поддержки Искателей профессий.
+                    ${mailProperties.productionMail.username}
+                    Канал технической поддержки платформы: https://t.me/career_seekers_help
+                """.trimIndent()
+            }
         }.also {
             mailer.send(it)
         }
