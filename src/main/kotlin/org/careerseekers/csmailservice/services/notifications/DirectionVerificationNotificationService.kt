@@ -24,19 +24,43 @@ class DirectionVerificationNotificationService(
         SimpleMailMessage().apply {
             from = mailProperties.productionMail.username
             setTo(message.expert.email)
-            subject = "Искатели Профессий | Документ верифицирован"
-            text = """
+            subject = "Искатели Профессий | Информация о статусе документа"
+
+            text = if (message.verification) {
+                generateSuccessEmailText(message)
+            } else {
+                generateFailureEmailText(message)
+            }
+        }.also {
+            mailer.send(it)
+        }
+    }
+
+    private fun generateSuccessEmailText(message: DirectionDocumentsTask): String {
+        return """
             Уважаемый(-ая) ${message.expert.lastName} ${message.expert.firstName} ${message.expert.patronymic}!   
             Сообщаем Вам, что документ «${message.documentType}» для компетенции ${message.directionName} возрастной категории ${message.ageCategory} успешно прошел проверку.
-
-           
+            
             Спасибо,
             Команда поддержки Искателей профессий.
             ${mailProperties.productionMail.username}
             Канал технической поддержки платформы: https://t.me/career_seekers_help
         """.trimIndent()
-        }.also {
-            mailer.send(it)
-        }
+    }
+
+    private fun generateFailureEmailText(message: DirectionDocumentsTask): String {
+        return """
+            Уважаемый(-ая) ${message.expert.lastName} ${message.expert.firstName} ${message.expert.patronymic}!   
+            Сообщаем Вам, что документ «${message.documentType}» для компетенции ${message.directionName} возрастной категории ${message.ageCategory} не прошел проверку.
+                    
+            Для уточнения деталей, пожалуйста, обратитесь к Надежде Анатольевне Бурдун.
+            Адрес электронной почты для связи: kidschamp@adtspb.ru
+      
+                    
+            Спасибо,
+            Команда поддержки Искателей профессий.
+            ${mailProperties.productionMail.username}
+            Канал технической поддержки платформы: https://t.me/career_seekers_help
+        """.trimIndent()
     }
 }
