@@ -60,3 +60,11 @@ data class DirectionDocumentsTask (
     val tutor: UsersCacheDto,
     val verification: Boolean,
 ) : KafkaMessagesDto()
+
+@Serializable
+@SerialName("UniversalEmailMessage")
+data class UniversalEmailMessageDto(
+    val email: String,
+    val subject: String,
+    val body: String,
+) : KafkaMessagesDto()
