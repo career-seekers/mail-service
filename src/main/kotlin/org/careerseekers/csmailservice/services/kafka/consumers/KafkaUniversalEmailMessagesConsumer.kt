@@ -39,7 +39,7 @@ class KafkaUniversalEmailMessagesConsumer(
                 SimpleMailMessage().apply {
                     from = mailProperties.productionMail.username
                     setTo(message.email)
-                    subject = "Добавление ссылки на Телеграм-аккаунт"
+                    subject = message.subject
                     text = """
                     ${message.body}
                    
