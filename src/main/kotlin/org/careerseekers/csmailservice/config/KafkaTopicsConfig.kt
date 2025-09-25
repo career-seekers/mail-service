@@ -53,4 +53,13 @@ class KafkaTopicsConfig {
             .replicas(3)
             .build()
     }
+
+    @Bean
+    fun universalEmailMessagesTopic(): NewTopic {
+        return TopicBuilder
+            .name(KafkaTopics.UNIVERSAL_EMAIL_MESSAGES_TOPIC.name)
+            .partitions(12)
+            .replicas(3)
+            .build()
+    }
 }
