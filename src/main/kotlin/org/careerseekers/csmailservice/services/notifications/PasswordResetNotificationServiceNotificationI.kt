@@ -7,10 +7,8 @@ import org.careerseekers.csmailservice.dto.EmailSendingTaskDto
 import org.careerseekers.csmailservice.dto.VerificationCodeDto
 import org.careerseekers.csmailservice.enums.MailEventTypes
 import org.careerseekers.csmailservice.exceptions.BadRequestException
-import org.careerseekers.csmailservice.exceptions.NotFoundException
 import org.careerseekers.csmailservice.services.interfaces.IEmailNotificationProcessingService
 import org.careerseekers.csmailservice.utils.CodeGenerator.generateVerificationCode
-import org.careerseekers.csmailservice.utils.JwtUtil
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
@@ -20,7 +18,6 @@ import org.springframework.stereotype.Service
 @Service
 class PasswordResetNotificationServiceNotificationI(
     @param:Qualifier("productionMailSender") override val mailer: JavaMailSender,
-    private val jwtUtil: JwtUtil,
     private val passwordEncoder: PasswordEncoder,
     private val verificationCodesCache: VerificationCodesCache,
     private val mailProperties: MailProperties,
@@ -31,14 +28,12 @@ class PasswordResetNotificationServiceNotificationI(
     override fun handle(record: ConsumerRecord<String, EmailSendingTaskDto>) {
         val message = record.value()
 
-        val user = message.token?.let {
-            jwtUtil.getUserFromToken(it) ?: throw NotFoundException("User not found")
-        } ?: message.user ?: throw BadRequestException("This method requires user")
+        if (message.user == null) throw BadRequestException("This method requires user info.")
 
         val code = generateVerificationCode()
         verificationCodesCache.loadItemToCache(
             VerificationCodeDto(
-                userEmail = user.email,
+                userEmail = message.user.email,
                 code = passwordEncoder.encode(code),
                 retries = 0
             )
@@ -46,10 +41,10 @@ class PasswordResetNotificationServiceNotificationI(
 
         SimpleMailMessage().apply {
             from = mailProperties.productionMail.username
-            setTo(user.email)
+            setTo(message.user.email)
             subject = "Изменение пароля"
             text = """
-            Уважаемый(-ая) ${user.lastName} ${user.firstName} ${user.patronymic}!
+            Уважаемый(-ая) ${message.user.lastName} ${message.user.firstName} ${message.user.patronymic}!
             Для подтверждения изменения пароля введите следующий верификационный код: $code
             Если Вы не запрашивали этот код, просто проигнорируйте это письмо.
             
