@@ -8,47 +8,49 @@ import org.careerseekers.csmailservice.enums.MailEventTypes
 import org.careerseekers.csmailservice.exceptions.BadRequestException
 import org.careerseekers.csmailservice.services.interfaces.IEmailNotificationProcessingService
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.core.io.ClassPathResource
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
+import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Service
+import org.thymeleaf.TemplateEngine
+import org.thymeleaf.context.Context
 
 @Service
 class ExpertRegistrationNotificationServiceNotificationI(
     @param:Qualifier("productionMailSender") override val mailer: JavaMailSender,
     private val temporaryPasswordsCache: TemporaryPasswordsCache,
     private val mailProperties: MailProperties,
+    private val templateEngine: TemplateEngine
 ) : IEmailNotificationProcessingService {
     override val eventType = MailEventTypes.EXPERT_REGISTRATION
 
     override fun handle(record: ConsumerRecord<String, EmailSendingTaskDto>) {
-        val message = record.value()
+        val kafkaMessage = record.value()
+        val user = kafkaMessage.user!!
 
-        message.user?.let { user ->
-            val cacheItem =
-                temporaryPasswordsCache.getItemFromCache(user.email) ?: throw BadRequestException("Password not found")
+        val cacheItem =
+            temporaryPasswordsCache.getItemFromCache(user.email) ?: throw BadRequestException("Password not found")
 
-            SimpleMailMessage().apply {
-                from = mailProperties.productionMail.username
-                setTo(user.email)
-                subject = "Регистрация Главного эксперта в системе Искатели профессий"
-                text = """
-            Уважаемый(-ая) ${user.lastName} ${user.firstName} ${user.patronymic}!
-            Вас зарегистрировали как Главного эксперта на чемпионат Искатели профессий. 
-            По ссылке ниже Вы можете перейти в личный кабинет Главного эксперта, где сможете подробно изучить свои возможности и обязанности:
-            https://career-seekers.ru/
-            
-            Реквизиты для входа в личный кабинет:
-            Логин: ${user.email}
-            Пароль: ${cacheItem.password}
-            
-            Спасибо,
-            Команда поддержки Искателей профессий.
-            ${mailProperties.productionMail.username}
-            Канал технической поддержки платформы: https://t.me/career_seekers_help
-        """.trimIndent()
-            }.also {
-                mailer.send(it)
-            }
-        }
+        val context = Context()
+        context.setVariable("userName", "${user.lastName} ${user.firstName} ${user.patronymic}")
+        context.setVariable("userEmail", user.email)
+        context.setVariable("temporaryPassword", cacheItem.password)
+        context.setVariable("loginUrl", "https://career-seekers.ru/login")
+        context.setVariable("contactEmail", mailProperties.productionMail.username)
+
+        val htmlContent = templateEngine.process("expert-email-template", context)
+
+        val message = mailer.createMimeMessage()
+        val helper = MimeMessageHelper(message, true, "UTF-8")
+        helper.setTo(user.email)
+        helper.setFrom(mailProperties.productionMail.username)
+        helper.setSubject("Регистрация Главного эксперта в системе Искатели профессий")
+        helper.setText(htmlContent, true)
+
+        val resource = ClassPathResource("static/images/logo.png")
+        helper.addInline("logoImage", resource)
+
+        mailer.send(message)
     }
 }

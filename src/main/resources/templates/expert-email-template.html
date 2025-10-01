@@ -117,6 +117,10 @@
             color: white;
         }
 
+        .link-btn {
+            color: white!important;
+        }
+
         /* Список */
         .email-content ul {
             margin: 1rem 0;
@@ -224,28 +228,28 @@
     <div class="email-container">
         <!-- Заголовок письма -->
         <div class="email-header">
-            <img src="../static/images/logo.png" alt="Career Seekers Logo" class="logo">
+            <img src="cid:logoImage" alt="Career Seekers Logo" class="logo">
             <h1>Искатели профессий</h1>
-            <p class="subtitle">Личный кабинет участника</p>
+            <p class="subtitle">Личный кабинет эксперта</p>
         </div>
 
         <!-- Основной контент -->
         <div class="email-content">
             <h2>Добро пожаловать в систему!</h2>
             
-            <p>Здравствуйте, {{userName}}!</p>
+            <p th:text="'Здравствуйте, ' + ${userName} + '!'"> Здравствуйте! </p>
             
-            <p>Мы рады приветствовать вас в системе "Искатели профессий". Ваш аккаунт был успешно создан, и теперь вы можете начать работу с личным кабинетом.</p>
+            <p>Мы рады приветствовать вас в системе "Искатели профессий" в роли Главного эксперта. Ваш аккаунт был успешно создан, и теперь вы можете начать работу с личным кабинетом.</p>
 
             <div class="highlight">
                 <p><strong>Ваши данные для входа:</strong></p>
-                <p>Email: {{userEmail}}</p>
-                <p>Пароль: {{temporaryPassword}}</p>
+                <p th:text="${userEmail}"> Email </p>
+                <p th:text="${temporaryPassword}"> Пароль </p>
             </div>
 
             <p>Для начала работы перейдите в личный кабинет по ссылке ниже:</p>
 
-            <a href="{{loginUrl}}" class="button">Войти в личный кабинет</a>
+            <a th:href="${loginUrl}" class="button link-btn">Войти в личный кабинет</a>
 
             <div class="divider"></div>
 
@@ -259,7 +263,8 @@
 
             <p>Если у вас возникнут вопросы, не стесняйтесь обращаться к нашей службе поддержки.</p>
 
-            <p>С уважением,<br>Команда "Искатели профессий"</p>
+            <p>С уважением,<br>Ваши Искатели профессий</p>
+            <p th:text="${contactEmail}"> Contact </p>
         </div>
 
         <!-- Футер -->
