@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение регистрации</title>
+    <link rel="stylesheet" href="../static/fonts/fonts.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .email-header {
+            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .email-header .logo {
+            max-width: 120px;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+
+        .email-header h1 {
+            font-family: 'BIPS', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .email-header .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        .email-content {
+            padding: 2rem;
+        }
+
+        .email-content h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-family: 'BIPS', sans-serif;
+        }
+
+        .email-content p {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .success-box {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .success-box .icon {
+            font-size: 3rem;
+            color: #4caf50;
+            margin-bottom: 1rem;
+        }
+
+        .button {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            padding: 0.875rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .button:hover {
+            background: #388e3c;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, #e0e0e0 20%, #e0e0e0 80%, transparent 100%);
+            margin: 1.5rem 0;
+        }
+
+        .email-footer {
+            background: #f8f9fa;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .email-footer p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .email-container {
+                border-radius: 8px;
+            }
+
+            .email-header {
+                padding: 1.5rem;
+            }
+
+            .email-content {
+                padding: 1.5rem;
+            }
+
+            .button {
+                display: block;
+                text-align: center;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <img src="../static/images/logo.png" alt="Career Seekers Logo" class="logo">
+            <h1>Регистрация подтверждена!</h1>
+            <p class="subtitle">Добро пожаловать в систему</p>
+        </div>
+
+        <div class="email-content">
+            <div class="success-box">
+                <div class="icon">✓</div>
+                <h2>Регистрация успешно завершена!</h2>
+                <p>Ваш аккаунт {{userName}} был успешно создан и активирован.</p>
+            </div>
+
+            <p>Здравствуйте, {{userName}}!</p>
+            
+            <p>Поздравляем! Ваша регистрация в системе "Искатели профессий" была успешно подтверждена. Теперь вы можете пользоваться всеми возможностями личного кабинета.</p>
+
+            <p><strong>Ваш тип аккаунта:</strong> {{userType}}</p>
+            <p><strong>Email:</strong> {{userEmail}}</p>
+
+            <a href="{{dashboardUrl}}" class="button">Перейти в личный кабинет</a>
+
+            <div class="divider"></div>
+
+            <h3>Следующие шаги:</h3>
+            <ul>
+                <li>Заполните профиль в личном кабинете</li>
+                <li>Выберите интересующие компетенции</li>
+                <li>Изучите доступные программы</li>
+                <li>Начните свой путь развития</li>
+            </ul>
+
+            <p>Если у вас есть вопросы, наша служба поддержки всегда готова помочь!</p>
+
+            <p>С уважением,<br>Команда "Искатели профессий"</p>
+        </div>
+
+        <div class="email-footer">
+            <p>Академия Технического Творчества и Цифровых Технологий</p>
+        </div>
+    </div>
+</body>
+</html>

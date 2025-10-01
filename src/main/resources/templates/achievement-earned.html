@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новое достижение</title>
+    <link rel="stylesheet" href="../static/fonts/fonts.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .email-header {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .email-header .logo {
+            max-width: 120px;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+
+        .email-header h1 {
+            font-family: 'BIPS', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .email-header .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        .email-content {
+            padding: 2rem;
+        }
+
+        .email-content h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-family: 'BIPS', sans-serif;
+        }
+
+        .email-content p {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .achievement-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border: 2px solid #ff9800;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 152, 0, 0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .achievement-box .trophy {
+            font-size: 4rem;
+            color: #ff9800;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .achievement-box h3 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .achievement-box p {
+            color: #2c3e50;
+            font-size: 1.1rem;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .button {
+            display: inline-block;
+            background: #ff9800;
+            color: white;
+            padding: 0.875rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .button:hover {
+            background: #f57c00;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+
+        .stat-item .number {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ff9800;
+            display: block;
+        }
+
+        .stat-item .label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, #e0e0e0 20%, #e0e0e0 80%, transparent 100%);
+            margin: 1.5rem 0;
+        }
+
+        .email-footer {
+            background: #f8f9fa;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .email-footer p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .email-container {
+                border-radius: 8px;
+            }
+
+            .email-header {
+                padding: 1.5rem;
+            }
+
+            .email-content {
+                padding: 1.5rem;
+            }
+
+            .button {
+                display: block;
+                text-align: center;
+                width: 100%;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <img src="../static/images/logo.png" alt="Career Seekers Logo" class="logo">
+            <h1>Поздравляем!</h1>
+            <p class="subtitle">Новое достижение получено</p>
+        </div>
+
+        <div class="email-content">
+            <div class="achievement-box">
+                <div class="trophy">🏆</div>
+                <h3>{{achievementName}}</h3>
+                <p>{{achievementDescription}}</p>
+            </div>
+
+            <p>Здравствуйте, {{userName}}!</p>
+            
+            <p>Отличные новости! Вы получили новое достижение <strong>"{{achievementName}}"</strong> в системе "Искатели профессий".</p>
+
+            <p>{{achievementMessage}}</p>
+
+            <a href="{{achievementsUrl}}" class="button">Посмотреть все достижения</a>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="number">{{totalAchievements}}</span>
+                    <span class="label">Всего достижений</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">{{userLevel}}</span>
+                    <span class="label">Уровень</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">{{pointsEarned}}</span>
+                    <span class="label">Очков получено</span>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <h3>Продолжайте развиваться!</h3>
+            <ul>
+                <li>Изучайте новые компетенции</li>
+                <li>Участвуйте в образовательных программах</li>
+                <li>Выполняйте задания и проекты</li>
+                <li>Делитесь знаниями с другими участниками</li>
+            </ul>
+
+            <p>Ваш прогресс вдохновляет! Продолжайте в том же духе!</p>
+
+            <p>С уважением,<br>Команда "Искатели профессий"</p>
+        </div>
+
+        <div class="email-footer">
+            <p>Академия Технического Творчества и Цифровых Технологий</p>
+        </div>
+    </div>
+</body>
+</html>
