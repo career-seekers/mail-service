@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Искатели профессий - Email Template</title>
+    <link rel="stylesheet" href="../static/fonts/fonts.css">
+    <style>
+        /* Сброс стилей */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Контейнер письма */
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Заголовок письма */
+        .email-header {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .email-header .logo {
+            max-width: 120px;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+
+        .email-header h1 {
+            font-family: 'BIPS', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .email-header .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        /* Основной контент */
+        .email-content {
+            padding: 2rem;
+        }
+
+        .email-content h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-family: 'BIPS', sans-serif;
+        }
+
+        .email-content p {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .email-content .highlight {
+            background: #fff3e0;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #ff9800;
+            margin: 1rem 0;
+        }
+
+        /* Кнопки */
+        .button {
+            display: inline-block;
+            background: #ff9800;
+            color: white;
+            padding: 0.875rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            margin: 1rem 0;
+        }
+
+        .button:hover {
+            background: #f57c00;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+        }
+
+        .button-secondary {
+            background: white;
+            color: #ff9800;
+            border: 2px solid #ff9800;
+        }
+
+        .button-secondary:hover {
+            background: #ff9800;
+            color: white;
+        }
+
+        .link-btn {
+            color: white!important;
+        }
+
+        /* Список */
+        .email-content ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .email-content li {
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        /* Разделитель */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, #e0e0e0 20%, #e0e0e0 80%, transparent 100%);
+            margin: 1.5rem 0;
+        }
+
+        /* Футер */
+        .email-footer {
+            background: #f8f9fa;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .email-footer p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .email-footer .footer-links {
+            margin-top: 1rem;
+        }
+
+        .email-footer .footer-links a {
+            color: #ff9800;
+            text-decoration: none;
+            margin: 0 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .email-footer .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .email-container {
+                border-radius: 8px;
+            }
+
+            .email-header {
+                padding: 1.5rem;
+            }
+
+            .email-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .email-content {
+                padding: 1.5rem;
+            }
+
+            .email-content h2 {
+                font-size: 1.25rem;
+            }
+
+            .button {
+                display: block;
+                text-align: center;
+                width: 100%;
+                margin: 1rem 0;
+            }
+
+            .email-footer {
+                padding: 1rem;
+            }
+        }
+
+        /* Специальные стили для разных типов писем */
+        .welcome-email .email-header {
+            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+        }
+
+        .notification-email .email-header {
+            background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+        }
+
+        .warning-email .email-header {
+            background: linear-gradient(135deg, #ff5722 0%, #d32f2f 100%);
+        }
+
+        .success-email .email-header {
+            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Заголовок письма -->
+        <div class="email-header">
+            <img src="cid:logoImage" alt="Career Seekers Logo" class="logo">
+            <h1>Искатели профессий</h1>
+            <p class="subtitle">Личный кабинет эксперта</p>
+        </div>
+
+        <!-- Основной контент -->
+        <div class="email-content">
+            <h2>Добро пожаловать в систему!</h2>
+            
+            <p th:text="'Здравствуйте, ' + ${userName} + '!'"> Здравствуйте! </p>
+            
+            <p>Мы рады приветствовать вас в системе "Искатели профессий" в роли Главного эксперта. Ваш аккаунт был успешно создан, и теперь вы можете начать работу с личным кабинетом.</p>
+
+            <div class="highlight">
+                <p><strong>Ваши данные для входа:</strong></p>
+                <p th:text="${userEmail}"> Email </p>
+                <p th:text="${temporaryPassword}"> Пароль </p>
+            </div>
+
+            <p>Для начала работы перейдите в личный кабинет по ссылке ниже:</p>
+
+            <a th:href="${loginUrl}" class="button link-btn">Войти в личный кабинет</a>
+
+            <div class="divider"></div>
+
+            <h3>Что вас ждет в системе:</h3>
+            <ul>
+                <li>Управление компетенциями и достижениями</li>
+                <li>Участие в образовательных программах</li>
+                <li>Отслеживание прогресса развития</li>
+                <li>Получение сертификатов и наград</li>
+            </ul>
+
+            <p>Если у вас возникнут вопросы, не стесняйтесь обращаться к нашей службе поддержки.</p>
+
+            <p>С уважением,<br>Ваши Искатели профессий</p>
+            <p th:text="${contactEmail}"> Contact </p>
+        </div>
+
+        <!-- Футер -->
+        <div class="email-footer">
+            <p>Академия Технического Творчества и Цифровых Технологий</p>
+        </div>
+    </div>
+</body>
+</html>
