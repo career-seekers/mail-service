@@ -24,9 +24,9 @@ class CacheConfig(
     }
 
     @Bean
-    fun cacheConfiguration5min(): RedisCacheConfiguration {
+    fun cacheConfiguration10min(): RedisCacheConfiguration {
         return RedisCacheConfiguration.defaultCacheConfig()
-            .entryTtl(Duration.ofMinutes(5))
+            .entryTtl(Duration.ofMinutes(10))
             .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer))
             .disableCachingNullValues()
     }
@@ -34,7 +34,7 @@ class CacheConfig(
     @Bean
     fun cacheManager(connectionFactory: RedisConnectionFactory): CacheManager {
         return RedisCacheManager.builder(connectionFactory)
-            .withCacheConfiguration("verification_code", cacheConfiguration5min())
+            .withCacheConfiguration("verification_code", cacheConfiguration10min())
             .cacheDefaults(cacheConfiguration30min())
             .build()
     }
