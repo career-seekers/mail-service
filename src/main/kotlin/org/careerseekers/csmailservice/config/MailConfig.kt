@@ -19,25 +19,11 @@ class MailConfig(private val mailProperties: MailProperties) {
         mailSender.password = mailProperties.productionMail.password
 
         val props = mailSender.javaMailProperties
-        props.setProperty("mail.transport.protocol", mailProperties.protocol)
-        props.setProperty("mail.debug", mailProperties.debug)
-
-        return mailSender
-    }
-
-    @Bean
-    @Qualifier("serviceMailSender")
-    fun serviceMailSender(): JavaMailSender {
-        val mailSender = JavaMailSenderImpl()
-
-        mailSender.host = mailProperties.host
-        mailSender.port = mailProperties.port.toInt()
-        mailSender.username = mailProperties.serviceMail.username
-        mailSender.password = mailProperties.serviceMail.password
-
-        val props = mailSender.javaMailProperties
-        props.setProperty("mail.transport.protocol", mailProperties.protocol)
-        props.setProperty("mail.debug", mailProperties.debug)
+        props["mail.transport.protocol"] = "smtp"
+        props["mail.smtp.auth"] = "true"
+        props["mail.smtp.starttls.enable"] = "true"
+        props["mail.smtp.ssl.enable"] = "false"
+        props["mail.debug"] = "true"
 
         return mailSender
     }

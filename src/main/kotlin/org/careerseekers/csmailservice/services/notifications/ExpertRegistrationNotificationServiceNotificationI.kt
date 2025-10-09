@@ -9,7 +9,6 @@ import org.careerseekers.csmailservice.exceptions.BadRequestException
 import org.careerseekers.csmailservice.services.interfaces.IEmailNotificationProcessingService
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.core.io.ClassPathResource
-import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Service
@@ -37,7 +36,7 @@ class ExpertRegistrationNotificationServiceNotificationI(
         context.setVariable("userEmail", user.email)
         context.setVariable("temporaryPassword", cacheItem.password)
         context.setVariable("loginUrl", "https://career-seekers.ru/login")
-        context.setVariable("contactEmail", mailProperties.productionMail.username)
+        context.setVariable("contactEmail", "kidschamp@adtspb.ru")
 
         val htmlContent = templateEngine.process("expert-email-template", context)
 

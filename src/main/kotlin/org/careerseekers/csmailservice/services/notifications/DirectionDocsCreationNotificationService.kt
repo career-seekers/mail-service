@@ -33,7 +33,7 @@ class DirectionDocsCreationNotificationService(
            
             Спасибо,
             Команда поддержки Искателей профессий.
-            ${mailProperties.productionMail.username}
+            kidschamp@adtspb.ru
             Канал технической поддержки платформы: https://t.me/career_seekers_help
         """.trimIndent()
         }.also {

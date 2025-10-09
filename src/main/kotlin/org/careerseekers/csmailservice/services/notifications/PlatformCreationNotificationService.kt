@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class PlatformCreationNotificationService(
-    @param:Qualifier("serviceMailSender") private val mailer: JavaMailSender,
+    @param:Qualifier("productionMailSender") private val mailer: JavaMailSender,
     private val usersCacheClient: UsersCacheClient,
     private val mailProperties: MailProperties,
 ) : IKafkaMessageHandler<String, PlatformCreationDto> {
@@ -56,7 +56,7 @@ class PlatformCreationNotificationService(
 
                 Спасибо,
                 Команда поддержки Искателей профессий.
-                ${mailProperties.productionMail.username}
+                kidschamp@adtspb.ru
                 Канал технической поддержки платформы: https://t.me/career_seekers_help
                 """.trimIndent()
             }

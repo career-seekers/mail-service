@@ -47,8 +47,7 @@ class PreRegistrationNotificationServiceNotificationI(
             
             Спасибо,
             Команда поддержки Искателей профессий.
-            ${mailProperties.productionMail.username}
-            Канал технической поддержки платформы: https://t.me/career_seekers_help
+            kidschamp@adtspb.ru
         """.trimIndent()
             }.also {
                 mailer.send(it)
