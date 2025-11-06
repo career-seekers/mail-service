@@ -62,4 +62,13 @@ class KafkaTopicsConfig {
             .replicas(3)
             .build()
     }
+
+    @Bean
+    fun participationStatusUpdateTopic(): NewTopic {
+        return TopicBuilder
+            .name(KafkaTopics.PARTICIPATION_STATUS_UPDATE.name)
+            .partitions(12)
+            .replicas(3)
+            .build()
+    }
 }

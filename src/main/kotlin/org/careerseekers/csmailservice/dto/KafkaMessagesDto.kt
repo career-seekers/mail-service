@@ -5,6 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.careerseekers.csmailservice.enums.DirectionDocsEventTypes
 import org.careerseekers.csmailservice.enums.MailEventTypes
+import org.careerseekers.csmailservice.enums.ParticipantStatus
 
 @Serializable
 @Polymorphic
@@ -67,4 +68,15 @@ data class UniversalEmailMessageDto(
     val email: String,
     val subject: String,
     val body: String,
+) : KafkaMessagesDto()
+
+@Serializable
+@SerialName("ParticipantStatusUpdate")
+data class ParticipantStatusUpdate (
+    val status: ParticipantStatus,
+    val user: UsersCacheDto,
+    val mentor: UsersCacheDto,
+    val childName: String,
+    val competitionName: String,
+    val ageCategory: String,
 ) : KafkaMessagesDto()
