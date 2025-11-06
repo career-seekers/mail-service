@@ -7,6 +7,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.careerseekers.csmailservice.config.MailProperties
 import org.careerseekers.csmailservice.dto.ParticipantStatusUpdate
 import org.careerseekers.csmailservice.dto.UsersCacheDto
+import org.careerseekers.csmailservice.enums.ParticipantStatus
 import org.careerseekers.csmailservice.services.interfaces.IKafkaMessageHandler
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
@@ -41,8 +42,9 @@ class ParticipantStatusUpdateNotificationService(
         context.setVariable("notificationTitle", "Изменение статуса участия в Чемпионате")
         context.setVariable("userName", "${user.lastName} ${user.firstName} ${user.patronymic}")
         context.setVariable("contactEmail", "kidschamp@adtspb.ru")
-        context.setVariable(
-            "message", """
+        if (kafkaMessage.status == ParticipantStatus.FINALIST) {
+            context.setVariable(
+                "message", """
                 <p>
                     Поздравляем, ${kafkaMessage.childName} стал(-a) финалистом четвёртого регионального чемпионата «Искатели профессий» в компетенции ${kafkaMessage.competitionName} ${kafkaMessage.ageCategory}!
                 </p>
@@ -60,8 +62,26 @@ class ParticipantStatusUpdateNotificationService(
                     1 декабря на сайте чемпионата будут опубликованы сертификаты конкурсантов и наставников отборочного этапа чемпионата - https://career-seekers.tilda.ws/.  
                     До встречи!
                 </p>
-        """.trimIndent()
-        )
+                """.trimIndent()
+            )
+        } else if (kafkaMessage.status == ParticipantStatus.PARTICIPANT) {
+            context.setVariable(
+                "message", """
+                <p>
+                    Благодарим, ${kafkaMessage.childName} за участие в четвёртом региональном чемпионате «Искатели профессий» в компетенции ${kafkaMessage.competitionName} ${kafkaMessage.ageCategory}!
+                </p>
+                <br>
+                <p>
+                    Ваш результат не стал призовым, но мы верим, что стоит попробовать в следующий раз и вас наверняка ждёт успех!
+                </p>
+                <br>
+                <p>
+                    1 декабря на сайте чемпионата будут опубликованы сертификаты конкурсантов и наставников отборочного этапа чемпионата - https://career-seekers.tilda.ws/.  
+                    До новых встреч!
+                </p>
+                """.trimIndent()
+            )
+        }
 
         val htmlContent = templateEngine.process("participant-status-update-notification", context)
 
