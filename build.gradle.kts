@@ -35,10 +35,23 @@ repositories {
     mavenCentral()
 }
 
+val springStarterMail: String by project
+val jsonwebtokenVersion: String by project
+val jaxbApiVersion: String by project
+val mapstructVersion: String by project
+val grpcMessagingVersion: String by project
+val protobufVersion: String by project
+val grpcProtobufVersion: String by project
+val kotlinxCoroutinesVersion: String by project
+val kotlinxSerializationVersion: String by project
+val dotenvSpringVersion: String by project
+val javaxAnnotationVersion: String by project
+val mockitoVersion: String by project
+
 dependencies {
     // Spring Boot
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    implementation("org.springframework.boot:spring-boot-starter-mail:3.4.9")
+    implementation("org.springframework.boot:spring-boot-starter-mail:$springStarterMail")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
@@ -52,8 +65,8 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
 
     // JWT Auth
-    implementation("io.jsonwebtoken:jjwt:0.12.6")
-    implementation("javax.xml.bind:jaxb-api:2.3.0")
+    implementation("io.jsonwebtoken:jjwt:$jsonwebtokenVersion")
+    implementation("javax.xml.bind:jaxb-api:$jaxbApiVersion")
 
     // Databases
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -66,40 +79,40 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
     // Mapper
-    implementation("org.mapstruct:mapstruct:1.5.3.Final")
-    kapt("org.mapstruct:mapstruct-processor:1.5.3.Final")
+    implementation("org.mapstruct:mapstruct:$mapstructVersion")
+    kapt("org.mapstruct:mapstruct-processor:$mapstructVersion")
 
     // Kafka messaging
     implementation("org.springframework.kafka:spring-kafka")
     testImplementation("org.springframework.kafka:spring-kafka-test")
 
     // gRPC messaging
-    implementation("net.devh:grpc-server-spring-boot-starter:3.1.0.RELEASE")
-    implementation("net.devh:grpc-client-spring-boot-starter:3.1.0.RELEASE")
-    implementation("com.google.protobuf:protobuf-java:4.28.2")
-    implementation("io.grpc:grpc-protobuf:1.57.2")
-    implementation("io.grpc:grpc-stub:1.57.2")
+    implementation("net.devh:grpc-server-spring-boot-starter:$grpcMessagingVersion")
+    implementation("net.devh:grpc-client-spring-boot-starter:$grpcMessagingVersion")
+    implementation("com.google.protobuf:protobuf-java:$protobufVersion")
+    implementation("io.grpc:grpc-protobuf:$grpcProtobufVersion")
+    implementation("io.grpc:grpc-stub:$grpcProtobufVersion")
 
     // Kotlinx coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     //Kotlinx serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.5.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$kotlinxSerializationVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     // Utilities
-    implementation("one.stayfocused.spring:dotenv-spring-boot:1.0.0")
-    implementation("javax.annotation:javax.annotation-api:1.3.2")
+    implementation("one.stayfocused.spring:dotenv-spring-boot:$dotenvSpringVersion")
+    implementation("javax.annotation:javax.annotation-api:$javaxAnnotationVersion")
 
     // Tests
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoVersion")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     mockitoAgent("org.mockito:mockito-core")
 
