@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Уведомление</title>
+    <title>Новое мероприятие добавлено</title>
     <link rel="stylesheet" href="../static/fonts/fonts.css">
     <style>
         * {
@@ -40,7 +40,6 @@
         .email-header .logo {
             max-width: 120px;
             height: auto;
-            margin-bottom: 1rem;
         }
 
         .email-header h1 {
@@ -127,6 +126,26 @@
             margin: 0;
         }
 
+        .row {
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .text-link:hover {
+            cursor: pointer;
+            text-decoration: none;
+            color: #2c3e50;
+        }
+
+        .text-link {
+            font-weight: bold;
+            text-decoration: none;
+            color: #2c3e50;
+        }
+
         @media (max-width: 600px) {
             body {
                 padding: 10px;
@@ -153,47 +172,44 @@
     </style>
 </head>
 <body>
-    <div class="email-container">
-        <div class="email-header">
-            <img src="../static/images/logo.png" alt="Career Seekers Logo" class="logo">
-            <h1>{{notificationTitle}}</h1>
-            <p class="subtitle">Новое уведомление</p>
-        </div>
-
-        <div class="email-content">
-            <div class="notification-box">
-                <div class="icon">📢</div>
-                <h2>{{notificationTitle}}</h2>
-                <p>{{notificationMessage}}</p>
-            </div>
-
-            <p>Здравствуйте, {{userName}}!</p>
-            
-            <p>{{mainMessage}}</p>
-
-            {{#if actionUrl}}
-            <a href="{{actionUrl}}" class="button">{{actionButtonText}}</a>
-            {{/if}}
-
-            <div class="divider"></div>
-
-            <h3>Дополнительная информация:</h3>
-            <ul>
-                <li>Дата: {{notificationDate}}</li>
-                <li>Тип уведомления: {{notificationType}}</li>
-                {{#if priority}}
-                <li>Приоритет: {{priority}}</li>
-                {{/if}}
-            </ul>
-
-            <p>Если у вас есть вопросы по этому уведомлению, обратитесь в службу поддержки.</p>
-
-            <p>С уважением,<br>Команда "Искатели профессий"</p>
-        </div>
-
-        <div class="email-footer">
-            <p>Академия Технического Творчества и Цифровых Технологий</p>
-        </div>
+<div class="email-container">
+    <div class="email-header">
+        <img src="cid:logoImage" alt="Career Seekers Logo" class="logo">
+        <h1>Искатели профессий</h1>
+        <h1>Добавлено новое мероприятие</h1>
     </div>
+    <div class="email-content">
+        <div class="notification-box">
+            <div class="row">
+                <div class="icon">🎉</div>
+                <h2>Рады сообщить!</h2>
+            </div>
+            <p> Добавлено мероприятие в рамках образовательного этапа для финалистов компетенции
+                <strong th:text="${competenceName}"> «Название компетенции» </strong> возрастной категории
+                <strong th:text="${ageCategory}"> Категория</strong>.
+            </p>
+        </div>
+        <p>
+            Просьба ознакомиться и посетить мероприятие, ведь это уникальная возможность повысить свои навыки,
+            познакомиться с опытными специалистами и подготовиться к финальному этапу, который пройдет с 14 по 28
+            февраля.
+        </p>
+        <p>
+            С полным расписанием образовательного этапа вы сможете ознакомиться с 19 января, перейдя по
+            <a class="text-link" href="https://career-seekers.ru">
+                ссылке в личный кабинет.
+            </a>
+        </p>
+        <div class="divider"></div>
+        <p>
+            Если у Вас возникнут какие-либо вопросы, необходимо обратиться к главному эксперту компетенции -
+            <strong th:text="${expertName + ' (' + expertEmail + ')'}"> ФИО (email@example.com) </strong>.
+        </p>
+        <p>Желаем удачи!</p>
+    </div>
+    <div class="email-footer">
+        <p>С уважением,<br>Команда "Искатели профессий"</p>
+    </div>
+</div>
 </body>
 </html>
