@@ -86,6 +86,9 @@ data class ParticipantStatusUpdate (
 @SerialName("EventCreationDto")
 data class EventCreationDto(
     val eventType: EventTypes,
-    val directionId: Long,
+    val directionName: String,
+    val ageCategory: String,
+    val expertName: String,
+    val expertEmail: String,
     val participantsList: List<Long>
 ) : KafkaMessagesDto()
