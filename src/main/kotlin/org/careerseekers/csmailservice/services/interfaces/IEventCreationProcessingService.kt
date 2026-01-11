@@ -32,7 +32,7 @@ interface IEventCreationProcessingService : IKafkaMessageHandler<String, EventCr
         val helper = MimeMessageHelper(message, true, "UTF-8")
         helper.setBcc(sentTo)
         helper.setFrom(fromEmail)
-        helper.setSubject("Добавлено нвоое событие в компетенции | Чемпионат Искатели Профессий")
+        helper.setSubject("Добавлено новое событие в компетенции | Чемпионат Искатели Профессий")
         helper.setText(htmlContent, true)
 
         val resource = ClassPathResource("static/images/logo.png")
