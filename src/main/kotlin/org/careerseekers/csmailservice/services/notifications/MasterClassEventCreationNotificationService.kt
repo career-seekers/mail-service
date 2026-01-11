@@ -14,7 +14,7 @@ import org.thymeleaf.TemplateEngine
 import org.thymeleaf.context.Context
 
 @Service
-class QualifiersEventCreationNotificationService(
+class MasterClassEventCreationNotificationService(
     @param:Qualifier("productionMailSender") val mailer: JavaMailSender,
     private val mailProperties: MailProperties,
     private val templateEngine: TemplateEngine
