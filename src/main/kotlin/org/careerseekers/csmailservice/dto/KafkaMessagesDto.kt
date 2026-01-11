@@ -90,5 +90,5 @@ data class EventCreationDto(
     val ageCategory: String,
     val expertName: String,
     val expertEmail: String,
-    val participantsList: List<Long>
+    val participantsEmailList: List<String>
 ) : KafkaMessagesDto()

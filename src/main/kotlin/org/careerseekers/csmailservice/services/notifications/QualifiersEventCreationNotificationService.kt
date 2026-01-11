@@ -26,7 +26,7 @@ class QualifiersEventCreationNotificationService(
             templateEngine = templateEngine,
             mailer = mailer,
             fromEmail = mailProperties.productionMail.username,
-            sentTo = emptyArray(),
+            sentTo = kafkaMessage.participantsEmailList.toTypedArray(),
         )
 
         mailer.send(message)
