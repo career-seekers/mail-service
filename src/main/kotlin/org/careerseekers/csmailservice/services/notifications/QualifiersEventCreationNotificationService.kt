@@ -11,18 +11,18 @@ import org.springframework.stereotype.Service
 import org.thymeleaf.TemplateEngine
 
 @Service
-class MasterClassEventCreationNotificationService(
+class QualifiersEventCreationNotificationService(
     @param:Qualifier("productionMailSender") val mailer: JavaMailSender,
     private val mailProperties: MailProperties,
     private val templateEngine: TemplateEngine
 ) : IEventCreationProcessingService {
-    override val eventType = EventTypes.MASTER_CLASS
+    override val eventType = EventTypes.QUALIFIERS
 
     override fun handle(record: ConsumerRecord<String, EventCreationDto>) {
         val kafkaMessage = record.value()
         val message = createEventNotification(
             kafkaMessage = kafkaMessage,
-            templateName = "master-class",
+            templateName = "qualifiers",
             templateEngine = templateEngine,
             mailer = mailer,
             fromEmail = mailProperties.productionMail.username,
