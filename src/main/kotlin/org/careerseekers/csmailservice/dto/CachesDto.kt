@@ -29,8 +29,8 @@ data class UsersCacheDto(
     val password: String,
     val role: UsersRoles,
     val avatarId: Long,
-    val verified: Boolean,
-    val isMentor: VerificationStatuses,
+    val verified: VerificationStatuses,
+    val isMentor: Boolean,
 ) : CachesDto()
 
 @Serializable
