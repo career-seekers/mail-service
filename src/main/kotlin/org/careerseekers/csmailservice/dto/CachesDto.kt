@@ -7,6 +7,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import org.careerseekers.csmailservice.enums.UsersRoles
+import org.careerseekers.csmailservice.enums.VerificationStatuses
 import org.careerseekers.csmailservice.serializers.DateSerializer
 import java.util.Date
 
@@ -29,7 +30,7 @@ data class UsersCacheDto(
     val role: UsersRoles,
     val avatarId: Long,
     val verified: Boolean,
-    val isMentor: Boolean,
+    val isMentor: VerificationStatuses,
 ) : CachesDto()
 
 @Serializable
